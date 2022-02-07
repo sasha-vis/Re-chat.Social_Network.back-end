@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-//using WebApi.DAL.Repositories;
-//using WebApi.DAL.Interfaces;
+using WebApi.DAL.Interfaces;
+using WebApi.DAL.Repositories;
 
 namespace WebApi.DAL
 {
@@ -8,8 +8,8 @@ namespace WebApi.DAL
     {
         public static void RegisterDalDependencies(this IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationContext>();
-            //services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddDbContext<ApplicationContext>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }
 }

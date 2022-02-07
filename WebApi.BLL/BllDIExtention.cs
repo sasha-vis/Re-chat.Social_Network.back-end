@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-//using WebApi.BLL.Interfaces;
-//using WebApi.BLL.Services;
+using WebApi.BLL.Interfaces;
+using WebApi.BLL.Services;
 using WebApi.DAL;
 
 namespace WebApi.BLL
@@ -11,10 +11,10 @@ namespace WebApi.BLL
         {
             services.RegisterDalDependencies();
 
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             //services.AddTransient<ICategoryService, CategoryService>();
             //services.AddTransient<IProductService, ProductService>();
-            //services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
             //services.AddTransient<IOrderService, OrderService>();
         }
     }

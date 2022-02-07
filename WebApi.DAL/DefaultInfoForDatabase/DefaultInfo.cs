@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-//using WebApi.DAL.Entities;
+using WebApi.DAL.Entities;
 
 namespace WebApi.DAL.DefaultInfoForDatabase
 {
@@ -25,82 +25,93 @@ namespace WebApi.DAL.DefaultInfoForDatabase
             //    .WithMany(x => x.ProductsOrders)
             //    .HasForeignKey(x => x.OrderId);
 
-            //var countries = new List<Country>()
-            //{
-            //    new Country(){ Id = 1, Name = "Belarus"},
-            //    new Country(){ Id = 2, Name = "Russia"},
-            //    new Country(){ Id = 3, Name = "USA"}
-            //};
+            DateTime date = DateTime.Now;
+            string dateString = date.ToString("g");
 
-            //modelBuilder.Entity<Country>().HasData(countries);
+            var users = new List<User>()
+            {
+                new User(){ Id = 1, Name = "Sasha", Surname = "Vysotski", Gender = "Male", BirthdayDate = "10.09.1998", RegistrationDate = dateString },
+                new User(){ Id = 2, Name = "Pavel", Surname = "Motuz", Gender = "Male", BirthdayDate = "14.01.1999", RegistrationDate = dateString },
+                new User(){ Id = 3, Name = "Artem", Surname = "Kasabuka", Gender = "Male", BirthdayDate = "13.06.1999", RegistrationDate = dateString },
+                new User(){ Id = 4, Name = "Gosha", Surname = "Abramshuk", Gender = "Male", BirthdayDate = "20.02.1995", RegistrationDate = dateString },
+                new User(){ Id = 5, Name = "Tom", Surname = "Kruz", Gender = "Male", BirthdayDate = "02.08.2001", RegistrationDate = dateString },
+                new User(){ Id = 6, Name = "Savva", Surname = "Maceralnik", Gender = "Male", BirthdayDate = "23.04.1997", RegistrationDate = dateString }
+            };
 
-            //var cities = new List<City>()
-            //{
-            //    new City(){ Id = 1, Name = "Minsk", CountryId = 1 },
-            //    new City(){ Id = 2, Name = "Brest", CountryId = 1 },
-            //    new City(){ Id = 3, Name = "Gomel", CountryId = 1 },
-            //    new City(){ Id = 4, Name = "Moscow", CountryId = 2 },
-            //    new City(){ Id = 5, Name = "Saint Petersburg", CountryId = 2 },
-            //    new City(){ Id = 6, Name = "Novosibirsk", CountryId = 2 },
-            //    new City(){ Id = 7, Name = "New York", CountryId = 3 },
-            //    new City(){ Id = 8, Name = "Los Angeles", CountryId = 3 },
-            //    new City(){ Id = 9, Name = "Chicago", CountryId = 3 }
-            //};
+            modelBuilder.Entity<User>().HasData(users);
 
-            //modelBuilder.Entity<City>().HasData(cities);
+            var posts = new List<Post>()
+            {
+                new Post(){ Id = 1, PostContent = "Post1", UserId = 1 },
+                new Post(){ Id = 2, PostContent = "Post2", UserId = 3 },
+                new Post(){ Id = 3, PostContent = "Post3", UserId = 2 },
+                new Post(){ Id = 4, PostContent = "Post4", UserId = 1 },
+                new Post(){ Id = 5, PostContent = "Post5", UserId = 1 },
+                new Post(){ Id = 6, PostContent = "Post6", UserId = 3 }
+            };
 
-            //var users = new List<User>()
-            //{
-            //    new User() { Id = 1, Name = "Aleksandr", Surname = "Vysotski", Age = 23, CityId = 1 },
-            //    new User() { Id = 2, Name = "Pavel", Surname = "Motuz", Age = 22, CityId = 1 },
-            //    new User() { Id = 3, Name = "Artemiy", Surname = "Kasabuka", Age = 22, CityId = 1 },
-            //    new User() { Id = 4, Name = "Ivan", Surname = "Ivanov", Age = 33, CityId = 2 },
-            //    new User() { Id = 5, Name = "Nikolai", Surname = "Krasko", Age = 29, CityId = 3 },
-            //    new User() { Id = 6, Name = "Maksim", Surname = "Galkin", Age = 40, CityId = 4 },
-            //    new User() { Id = 7, Name = "Alla", Surname = "Pugacheva", Age = 58, CityId = 4 },
-            //    new User() { Id = 8, Name = "Egor", Surname = "Zhelobanov", Age = 9, CityId = 5 },
-            //    new User() { Id = 9, Name = "Nikita", Surname = "Milyavskiy", Age = 78, CityId = 6 },
-            //    new User() { Id = 10, Name = "Tom", Surname = "Kruz", Age = 18, CityId = 7 },
-            //    new User() { Id = 11, Name = "Leonardo", Surname = "Dicaprio", Age = 28, CityId = 7 },
-            //    new User() { Id = 12, Name = "Dwayne", Surname = "Jonson", Age = 41, CityId = 8 },
-            //    new User() { Id = 13, Name = "Henry", Surname = "Cavill", Age = 38, CityId = 8 },
-            //    new User() { Id = 14, Name = "Brad", Surname = "Pitt", Age = 46, CityId = 8 },
-            //    new User() { Id = 15, Name = "Will", Surname = "Smith", Age = 49, CityId = 9 }
-            //};
+            modelBuilder.Entity<Post>().HasData(posts);
 
-            //modelBuilder.Entity<User>().HasData(users);
+            var comments = new List<Comment>()
+            {
+                new Comment() { Id = 1, CommentContent = "Comment1", UserId = 1, PostId = 1 },
+                new Comment() { Id = 2, CommentContent = "Comment2", UserId = 1, PostId = 2 },
+                new Comment() { Id = 3, CommentContent = "Comment3", UserId = 1, PostId = 3 },
+                new Comment() { Id = 4, CommentContent = "Comment4", UserId = 1, PostId = 4 },
+                new Comment() { Id = 5, CommentContent = "Comment5", UserId = 1, PostId = 5 },
+                new Comment() { Id = 6, CommentContent = "Comment6", UserId = 1, PostId = 6 },
+                new Comment() { Id = 7, CommentContent = "Comment7", UserId = 2, PostId = 1 },
+                new Comment() { Id = 8, CommentContent = "Comment8", UserId = 2, PostId = 3 },
+                new Comment() { Id = 9, CommentContent = "Comment9", UserId = 3, PostId = 6 },
+                new Comment() { Id = 10, CommentContent = "Comment10", UserId = 3, PostId = 1 },
+                new Comment() { Id = 11, CommentContent = "Comment11", UserId = 3, PostId = 2 },
+                new Comment() { Id = 12, CommentContent = "Comment12", UserId = 3, PostId = 4 }
+            };
 
-            //var phones = new List<Phone>()
-            //{
-            //    new Phone() { Id = 1, Model = "Xiaomi", Number = "375293776020", UserId = 1 },
-            //    new Phone() { Id = 2, Model = "Iphone", Number = "375296332394", UserId = 2 },
-            //    new Phone() { Id = 3, Model = "Iphone", Number = "375297764345", UserId = 3 },
-            //    new Phone() { Id = 4, Model = "Nokia", Number = "375297463543", UserId = 4 },
-            //    new Phone() { Id = 5, Model = "Iphone", Number = "375256787534", UserId = 5 },
-            //    new Phone() { Id = 6, Model = "Iphone", Number = "802545346", UserId = 6 },
-            //    new Phone() { Id = 7, Model = "Iphone", Number = "802565756", UserId = 7 },
-            //    new Phone() { Id = 8, Model = "Samsung", Number = "802525645", UserId = 8 },
-            //    new Phone() { Id = 9, Model = "Nokia", Number = "802542354", UserId = 9 },
-            //    new Phone() { Id = 10, Model = "Iphone", Number = "125453434", UserId = 10 },
-            //    new Phone() { Id = 11, Model = "Iphone", Number = "123468675", UserId = 11 },
-            //    new Phone() { Id = 12, Model = "Iphone", Number = "123423444", UserId = 12 },
-            //    new Phone() { Id = 13, Model = "Iphone", Number = "123454622", UserId = 13 },
-            //    new Phone() { Id = 14, Model = "Iphone", Number = "123457783", UserId = 14 },
-            //    new Phone() { Id = 15, Model = "Iphone", Number = "123443453", UserId = 15 }
-            //};
+            modelBuilder.Entity<Comment>().HasData(comments);
 
-            //modelBuilder.Entity<Phone>().HasData(phones);
+            var likes = new List<Like>()
+            {
+                new Like() { Id = 1, UserId = 1, PostId = 1 },
+                new Like() { Id = 2, UserId = 1, PostId = 4 },
+                new Like() { Id = 3, UserId = 1, PostId = 5 },
+                new Like() { Id = 4, UserId = 2, PostId = 1 },
+                new Like() { Id = 5, UserId = 2, PostId = 2 },
+                new Like() { Id = 6, UserId = 3, PostId = 1 },
+                new Like() { Id = 7, UserId = 3, PostId = 3 },
+                new Like() { Id = 8, UserId = 3, PostId = 6 },
+            };
 
-            //var categories = new List<Category>()
-            //{
-            //    new Category() { Id = 1, Name = "Pizzas" },
-            //    new Category() { Id = 2, Name = "Burgers" },
-            //    new Category() { Id = 3, Name = "Drinks" },
-            //    new Category() { Id = 4, Name = "Snacks" },
-            //    new Category() { Id = 5, Name = "Sauces" }
-            //};
+            modelBuilder.Entity<Like>().HasData(likes);
 
-            //modelBuilder.Entity<Category>().HasData(categories);
+            var friendLists = new List<FriendList>()
+            {
+                new FriendList() { Id = 1, UserId = 1, FriendId = 2 },
+                new FriendList() { Id = 2, UserId = 1, FriendId = 3 },
+                new FriendList() { Id = 3, UserId = 1, FriendId = 2 },
+                new FriendList() { Id = 4, UserId = 1, FriendId = 3 },
+                new FriendList() { Id = 5, UserId = 1, FriendId = 2 },
+                new FriendList() { Id = 6, UserId = 1, FriendId = 3 },
+                new FriendList() { Id = 7, UserId = 1, FriendId = 2 },
+                new FriendList() { Id = 8, UserId = 1, FriendId = 3 }
+            };
+
+            modelBuilder.Entity<FriendList>().HasData(friendLists);
+
+            var requestFriendLists = new List<RequestFriendList>()
+            {
+                new RequestFriendList() { Id = 1, UserId = 1, FriendId = 4 },
+                new RequestFriendList() { Id = 2, UserId = 1, FriendId = 5 },
+                new RequestFriendList() { Id = 3, UserId = 1, FriendId = 6 },
+                new RequestFriendList() { Id = 4, UserId = 2, FriendId = 4 },
+                new RequestFriendList() { Id = 5, UserId = 2, FriendId = 5 },
+                new RequestFriendList() { Id = 6, UserId = 2, FriendId = 6 },
+                new RequestFriendList() { Id = 7, UserId = 3, FriendId = 4 },
+                new RequestFriendList() { Id = 8, UserId = 3, FriendId = 5 },
+                new RequestFriendList() { Id = 9, UserId = 3, FriendId = 6 }
+            };
+
+            modelBuilder.Entity<RequestFriendList>().HasData(requestFriendLists);
 
             //var products = new List<Product>()
             //{

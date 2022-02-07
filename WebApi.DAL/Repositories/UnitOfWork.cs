@@ -1,4 +1,4 @@
-﻿//using WebApi.DAL.Entities;
+﻿using WebApi.DAL.Entities;
 using WebApi.DAL.Interfaces;
 
 namespace WebApi.DAL.Repositories
@@ -9,7 +9,7 @@ namespace WebApi.DAL.Repositories
 
         //private ICategoryRepository<Category> _categoryRepository;
         //private IProductRepository<Product> _productRepository;
-        //private IUserRepository<User> _userRepository;
+        private IUserRepository<User> _userRepository;
         //private IOrderRepository<Order> _orderRepository;
 
         public UnitOfWork(ApplicationContext context)
@@ -37,15 +37,15 @@ namespace WebApi.DAL.Repositories
         //    }
         //}
 
-        //public IUserRepository<User> Users
-        //{
-        //    get
-        //    {
-        //        if (_userRepository == null)
-        //            _userRepository = new UserRepository(db);
-        //        return _userRepository;
-        //    }
-        //}
+        public IUserRepository<User> Users
+        {
+            get
+            {
+                if (_userRepository == null)
+                    _userRepository = new UserRepository(db);
+                return _userRepository;
+            }
+        }
 
         //public IOrderRepository<Order> Orders
         //{
