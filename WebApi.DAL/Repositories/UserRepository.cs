@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using WebApi.DAL.Entities;
@@ -11,9 +16,17 @@ namespace WebApi.DAL.Repositories
     public class UserRepository : IUserRepository<User>
     {
         private readonly ApplicationContext _db;
-        public UserRepository(ApplicationContext context)
+ 
+        private readonly IConfiguration _configuration;
+        private readonly UserManager<User> _userManager;
+
+        public UserRepository(ApplicationContext context,
+            IConfiguration configuration,
+            UserManager<User> userManager)
         {
-            _db = context;
+            _db=context;
+            _configuration = configuration;
+            _userManager = userManager;
         }
 
         public IEnumerable<User> GetList()
@@ -23,6 +36,54 @@ namespace WebApi.DAL.Repositories
                 //.Include(p => p.City);
 
             return users;
+        }
+
+        public JwtSecurityToken Login(User model, string password)
+        {
+            var user =  _userManager.FindByNameAsync(model.Email).Result;
+            if (user != null &&  _userManager.CheckPasswordAsync(user, password).Result)
+            {
+                var authClaims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, user.Email),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+
+                var token = GetToken(authClaims);
+
+                return (token);
+            }
+            return null;
+        }
+
+
+        public JwtSecurityToken Create(User model, string password)
+        {
+            //_db.Users.Add(model);
+            //_db.SaveChanges();
+ 
+            var userExists = _userManager.FindByNameAsync(model.Email).Result;
+            if (userExists == null)
+            {
+                _userManager.CreateAsync(model, password);
+                return Login(model, password);
+            }
+            return null;
+        }
+
+        private JwtSecurityToken GetToken(List<Claim> authClaims)
+        {
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["JWT:Expires"])),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return token;
         }
     }
 }

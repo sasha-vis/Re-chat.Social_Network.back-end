@@ -1,4 +1,6 @@
-﻿using WebApi.DAL.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using WebApi.DAL.Entities;
 using WebApi.DAL.Interfaces;
 
 namespace WebApi.DAL.Repositories
@@ -10,11 +12,20 @@ namespace WebApi.DAL.Repositories
         //private ICategoryRepository<Category> _categoryRepository;
         //private IProductRepository<Product> _productRepository;
         private IUserRepository<User> _userRepository;
+        private readonly IConfiguration _configuration;
+
+        private readonly UserManager<User> _userManager;
+
         //private IOrderRepository<Order> _orderRepository;
 
-        public UnitOfWork(ApplicationContext context)
+
+        public UnitOfWork(ApplicationContext context,
+          IConfiguration configuration,
+          UserManager<User> userManager)
         {
-            db = context;
+            this.db = context;
+            _configuration = configuration;
+            _userManager = userManager;
         }
 
         //public ICategoryRepository<Category> Categories
@@ -42,10 +53,11 @@ namespace WebApi.DAL.Repositories
             get
             {
                 if (_userRepository == null)
-                    _userRepository = new UserRepository(db);
+                    _userRepository = new UserRepository(db, _configuration, _userManager);
                 return _userRepository;
             }
         }
+
 
         //public IOrderRepository<Order> Orders
         //{

@@ -7,6 +7,30 @@ namespace WebApi.DAL.DefaultInfoForDatabase
     {
         public static void AddDefaultInfo(this ModelBuilder modelBuilder)
         {
+            DateTime date = DateTime.Now;
+            string dateTimeNow = date.ToString("g");
+
+            string dateNow = date.ToString("d");
+            string dayMonthNow = dateNow.Substring(0, 6);
+            int yearNow = Convert.ToInt32(dateNow.Substring(6));
+            string defaultYear = Convert.ToString(yearNow - 18);
+
+            string defaultBirthdayDate = dayMonthNow + defaultYear;
+          
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.RegistrationDate)
+                .HasDefaultValue(dateTimeNow);
+            modelBuilder.Entity<User>()
+                .Property(u => u.BirthdayDate)
+                .HasDefaultValue(defaultBirthdayDate);
+            modelBuilder.Entity<User>()
+                .Property(u => u.Gender)
+                .HasDefaultValue("Male");
+
+
+
+
             //modelBuilder.Entity<User>()
             //    .HasOne(x => x.Phone)
             //    .WithOne(x => x.User)
@@ -25,93 +49,112 @@ namespace WebApi.DAL.DefaultInfoForDatabase
             //    .WithMany(x => x.ProductsOrders)
             //    .HasForeignKey(x => x.OrderId);
 
-            DateTime date = DateTime.Now;
-            string dateString = date.ToString("g");
-
-            var users = new List<User>()
+            var sasha = new User()
             {
-                new User(){ Id = 1, Name = "Sasha", Surname = "Vysotski", Gender = "Male", BirthdayDate = "10.09.1998", RegistrationDate = dateString },
-                new User(){ Id = 2, Name = "Pavel", Surname = "Motuz", Gender = "Male", BirthdayDate = "14.01.1999", RegistrationDate = dateString },
-                new User(){ Id = 3, Name = "Artem", Surname = "Kasabuka", Gender = "Male", BirthdayDate = "13.06.1999", RegistrationDate = dateString },
-                new User(){ Id = 4, Name = "Gosha", Surname = "Abramshuk", Gender = "Male", BirthdayDate = "20.02.1995", RegistrationDate = dateString },
-                new User(){ Id = 5, Name = "Tom", Surname = "Kruz", Gender = "Male", BirthdayDate = "02.08.2001", RegistrationDate = dateString },
-                new User(){ Id = 6, Name = "Savva", Surname = "Maceralnik", Gender = "Male", BirthdayDate = "23.04.1997", RegistrationDate = dateString }
+                Name = "Aleksandr",
+                Surname = "Vysotski",
+                Email = "sasha.vysotski@gmail.com",
+                NormalizedEmail = "SASHA.VYSOTSKI@GMAIL.COM",
+                UserName = "sasha.vysotski@gmail.com",
+                NormalizedUserName = "SASHA.VYSOTSKI@GMAIL.COM",
+                PasswordHash = "AQAAAAEAACcQAAAAEBkYorHLrudV7o/AMc9bEGtaudVjE2Rsrzny9W4orlEeHLNG3oBhrbu4F27j5wRGbg==",
+                SecurityStamp = "SUXDS2ENOSQRGR3PQ4USLV4UT7Z6GU4I",
+                ConcurrencyStamp = "77d5ec9f-e202-4ebe-bb56-639cfc03e0c3",
+                RegistrationDate = dateTimeNow,
+                BirthdayDate = "10.09.1998",
+                Gender = "Male"
+            };
+            var elena = new User()
+            {
+                Name = "Elena",
+                Surname = "Samoilenko",
+                Email = "e.samoilemko@mail.ru",
+                NormalizedEmail = "E.SAMOILENKO@MAIL.RU",
+                UserName = "e.samoilemko@mail.ru",
+                NormalizedUserName = "E.SAMOILENKO@MAIL.RU",
+                PasswordHash = "AQAAAAEAACcQAAAAEOO9jCT7O2L9y10Ft4LsKDl3blzxlBqKoPVWzKp0ftUg1Cv73Vc5B8Al8xN5TD+e8w==",
+                SecurityStamp = "U43GQLZMYDGUOQWHVXLJBVOGMSRXWVLE",
+                ConcurrencyStamp = "fc5df5ce-a97d-4551-a7b2-7afa33a80c42",
+                RegistrationDate = dateTimeNow,
+                BirthdayDate = "14.06.1976",
+                Gender = "Female"
             };
 
-            modelBuilder.Entity<User>().HasData(users);
+            modelBuilder.Entity<User>().HasData(sasha);
+            modelBuilder.Entity<User>().HasData(elena);
 
             var posts = new List<Post>()
             {
-                new Post(){ Id = 1, PostContent = "Post1", UserId = 1 },
-                new Post(){ Id = 2, PostContent = "Post2", UserId = 3 },
-                new Post(){ Id = 3, PostContent = "Post3", UserId = 2 },
-                new Post(){ Id = 4, PostContent = "Post4", UserId = 1 },
-                new Post(){ Id = 5, PostContent = "Post5", UserId = 1 },
-                new Post(){ Id = 6, PostContent = "Post6", UserId = 3 }
+                new Post(){ Id = 1, PostContent = "Post1", UserId = sasha.Id },
+                new Post(){ Id = 2, PostContent = "Post2", UserId = elena.Id },
+                new Post(){ Id = 3, PostContent = "Post3", UserId = sasha.Id },
+                new Post(){ Id = 4, PostContent = "Post4", UserId = elena.Id },
+                new Post(){ Id = 5, PostContent = "Post5", UserId = sasha.Id },
+                new Post(){ Id = 6, PostContent = "Post6", UserId = elena.Id }
             };
 
             modelBuilder.Entity<Post>().HasData(posts);
 
-            var comments = new List<Comment>()
-            {
-                new Comment() { Id = 1, CommentContent = "Comment1", UserId = 1, PostId = 1 },
-                new Comment() { Id = 2, CommentContent = "Comment2", UserId = 1, PostId = 2 },
-                new Comment() { Id = 3, CommentContent = "Comment3", UserId = 1, PostId = 3 },
-                new Comment() { Id = 4, CommentContent = "Comment4", UserId = 1, PostId = 4 },
-                new Comment() { Id = 5, CommentContent = "Comment5", UserId = 1, PostId = 5 },
-                new Comment() { Id = 6, CommentContent = "Comment6", UserId = 1, PostId = 6 },
-                new Comment() { Id = 7, CommentContent = "Comment7", UserId = 2, PostId = 1 },
-                new Comment() { Id = 8, CommentContent = "Comment8", UserId = 2, PostId = 3 },
-                new Comment() { Id = 9, CommentContent = "Comment9", UserId = 3, PostId = 6 },
-                new Comment() { Id = 10, CommentContent = "Comment10", UserId = 3, PostId = 1 },
-                new Comment() { Id = 11, CommentContent = "Comment11", UserId = 3, PostId = 2 },
-                new Comment() { Id = 12, CommentContent = "Comment12", UserId = 3, PostId = 4 }
-            };
+            //var comments = new List<Comment>()
+            //{
+            //    new Comment() { Id = 1, CommentContent = "Comment1", UserId = 1, PostId = 1 },
+            //    new Comment() { Id = 2, CommentContent = "Comment2", UserId = 1, PostId = 2 },
+            //    new Comment() { Id = 3, CommentContent = "Comment3", UserId = 1, PostId = 3 },
+            //    new Comment() { Id = 4, CommentContent = "Comment4", UserId = 1, PostId = 4 },
+            //    new Comment() { Id = 5, CommentContent = "Comment5", UserId = 1, PostId = 5 },
+            //    new Comment() { Id = 6, CommentContent = "Comment6", UserId = 1, PostId = 6 },
+            //    new Comment() { Id = 7, CommentContent = "Comment7", UserId = 2, PostId = 1 },
+            //    new Comment() { Id = 8, CommentContent = "Comment8", UserId = 2, PostId = 3 },
+            //    new Comment() { Id = 9, CommentContent = "Comment9", UserId = 3, PostId = 6 },
+            //    new Comment() { Id = 10, CommentContent = "Comment10", UserId = 3, PostId = 1 },
+            //    new Comment() { Id = 11, CommentContent = "Comment11", UserId = 3, PostId = 2 },
+            //    new Comment() { Id = 12, CommentContent = "Comment12", UserId = 3, PostId = 4 }
+            //};
 
-            modelBuilder.Entity<Comment>().HasData(comments);
+            //modelBuilder.Entity<Comment>().HasData(comments);
 
-            var likes = new List<Like>()
-            {
-                new Like() { Id = 1, UserId = 1, PostId = 1 },
-                new Like() { Id = 2, UserId = 1, PostId = 4 },
-                new Like() { Id = 3, UserId = 1, PostId = 5 },
-                new Like() { Id = 4, UserId = 2, PostId = 1 },
-                new Like() { Id = 5, UserId = 2, PostId = 2 },
-                new Like() { Id = 6, UserId = 3, PostId = 1 },
-                new Like() { Id = 7, UserId = 3, PostId = 3 },
-                new Like() { Id = 8, UserId = 3, PostId = 6 },
-            };
+            //var likes = new List<Like>()
+            //{
+            //    new Like() { Id = 1, UserId = 1, PostId = 1 },
+            //    new Like() { Id = 2, UserId = 1, PostId = 4 },
+            //    new Like() { Id = 3, UserId = 1, PostId = 5 },
+            //    new Like() { Id = 4, UserId = 2, PostId = 1 },
+            //    new Like() { Id = 5, UserId = 2, PostId = 2 },
+            //    new Like() { Id = 6, UserId = 3, PostId = 1 },
+            //    new Like() { Id = 7, UserId = 3, PostId = 3 },
+            //    new Like() { Id = 8, UserId = 3, PostId = 6 },
+            //};
 
-            modelBuilder.Entity<Like>().HasData(likes);
+            //modelBuilder.Entity<Like>().HasData(likes);
 
-            var friendLists = new List<FriendList>()
-            {
-                new FriendList() { Id = 1, UserId = 1, FriendId = 2 },
-                new FriendList() { Id = 2, UserId = 1, FriendId = 3 },
-                new FriendList() { Id = 3, UserId = 1, FriendId = 2 },
-                new FriendList() { Id = 4, UserId = 1, FriendId = 3 },
-                new FriendList() { Id = 5, UserId = 1, FriendId = 2 },
-                new FriendList() { Id = 6, UserId = 1, FriendId = 3 },
-                new FriendList() { Id = 7, UserId = 1, FriendId = 2 },
-                new FriendList() { Id = 8, UserId = 1, FriendId = 3 }
-            };
+            //var friendLists = new List<FriendList>()
+            //{
+            //    new FriendList() { Id = 1, UserId = 1, FriendId = 2 },
+            //    new FriendList() { Id = 2, UserId = 1, FriendId = 3 },
+            //    new FriendList() { Id = 3, UserId = 1, FriendId = 2 },
+            //    new FriendList() { Id = 4, UserId = 1, FriendId = 3 },
+            //    new FriendList() { Id = 5, UserId = 1, FriendId = 2 },
+            //    new FriendList() { Id = 6, UserId = 1, FriendId = 3 },
+            //    new FriendList() { Id = 7, UserId = 1, FriendId = 2 },
+            //    new FriendList() { Id = 8, UserId = 1, FriendId = 3 }
+            //};
 
-            modelBuilder.Entity<FriendList>().HasData(friendLists);
+            //modelBuilder.Entity<FriendList>().HasData(friendLists);
 
-            var requestFriendLists = new List<RequestFriendList>()
-            {
-                new RequestFriendList() { Id = 1, UserId = 1, FriendId = 4 },
-                new RequestFriendList() { Id = 2, UserId = 1, FriendId = 5 },
-                new RequestFriendList() { Id = 3, UserId = 1, FriendId = 6 },
-                new RequestFriendList() { Id = 4, UserId = 2, FriendId = 4 },
-                new RequestFriendList() { Id = 5, UserId = 2, FriendId = 5 },
-                new RequestFriendList() { Id = 6, UserId = 2, FriendId = 6 },
-                new RequestFriendList() { Id = 7, UserId = 3, FriendId = 4 },
-                new RequestFriendList() { Id = 8, UserId = 3, FriendId = 5 },
-                new RequestFriendList() { Id = 9, UserId = 3, FriendId = 6 }
-            };
+            //var requestFriendLists = new List<RequestFriendList>()
+            //{
+            //    new RequestFriendList() { Id = 1, UserId = 1, FriendId = 4 },
+            //    new RequestFriendList() { Id = 2, UserId = 1, FriendId = 5 },
+            //    new RequestFriendList() { Id = 3, UserId = 1, FriendId = 6 },
+            //    new RequestFriendList() { Id = 4, UserId = 2, FriendId = 4 },
+            //    new RequestFriendList() { Id = 5, UserId = 2, FriendId = 5 },
+            //    new RequestFriendList() { Id = 6, UserId = 2, FriendId = 6 },
+            //    new RequestFriendList() { Id = 7, UserId = 3, FriendId = 4 },
+            //    new RequestFriendList() { Id = 8, UserId = 3, FriendId = 5 },
+            //    new RequestFriendList() { Id = 9, UserId = 3, FriendId = 6 }
+            //};
 
-            modelBuilder.Entity<RequestFriendList>().HasData(requestFriendLists);
+            //modelBuilder.Entity<RequestFriendList>().HasData(requestFriendLists);
 
             //var products = new List<Product>()
             //{

@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using WebApi.DAL.Entities;
 using WebApi.DAL.Interfaces;
 using WebApi.DAL.Repositories;
 
@@ -10,6 +12,10 @@ namespace WebApi.DAL
         {
             services.AddDbContext<ApplicationContext>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddIdentity<User, IdentityRole>()
+             .AddEntityFrameworkStores<ApplicationContext>()
+             .AddDefaultTokenProviders();
         }
     }
 }
