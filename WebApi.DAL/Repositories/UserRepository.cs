@@ -57,15 +57,12 @@ namespace WebApi.DAL.Repositories
         }
 
 
-        public JwtSecurityToken Create(User model, string password)
+        public async Task<JwtSecurityToken> Create(User model, string password)
         {
-            //_db.Users.Add(model);
-            //_db.SaveChanges();
- 
             var userExists = _userManager.FindByNameAsync(model.Email).Result;
             if (userExists == null)
             {
-                _userManager.CreateAsync(model, password);
+                await _userManager.CreateAsync(model, password);
                 return Login(model, password);
             }
             return null;

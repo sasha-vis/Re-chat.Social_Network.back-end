@@ -12,7 +12,7 @@ using WebApi.DAL;
 namespace WebApi.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220215133351_InitialMigration")]
+    [Migration("20220216114914_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -165,7 +165,11 @@ namespace WebApi.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("PostContent")
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -183,38 +187,44 @@ namespace WebApi.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            PostContent = "Post1",
-                            UserId = "5c38b3e4-4848-4f47-a9ee-1013e7a42260"
+                            Content = "Content of post1",
+                            Title = "Post1",
+                            UserId = "8ec3c014-36a2-46f1-9917-41f67fd65ccd"
                         },
                         new
                         {
                             Id = 2,
-                            PostContent = "Post2",
-                            UserId = "d705de06-1d3e-4e2d-be5f-77e2a3bfc168"
+                            Content = "Content of post2",
+                            Title = "Post2",
+                            UserId = "d1a2b740-f3a3-4e1e-8667-b2d0bb622828"
                         },
                         new
                         {
                             Id = 3,
-                            PostContent = "Post3",
-                            UserId = "5c38b3e4-4848-4f47-a9ee-1013e7a42260"
+                            Content = "Content of post3",
+                            Title = "Post3",
+                            UserId = "8ec3c014-36a2-46f1-9917-41f67fd65ccd"
                         },
                         new
                         {
                             Id = 4,
-                            PostContent = "Post4",
-                            UserId = "d705de06-1d3e-4e2d-be5f-77e2a3bfc168"
+                            Content = "Content of post4",
+                            Title = "Post4",
+                            UserId = "d1a2b740-f3a3-4e1e-8667-b2d0bb622828"
                         },
                         new
                         {
                             Id = 5,
-                            PostContent = "Post5",
-                            UserId = "5c38b3e4-4848-4f47-a9ee-1013e7a42260"
+                            Content = "Content of post5",
+                            Title = "Post5",
+                            UserId = "8ec3c014-36a2-46f1-9917-41f67fd65ccd"
                         },
                         new
                         {
                             Id = 6,
-                            PostContent = "Post6",
-                            UserId = "d705de06-1d3e-4e2d-be5f-77e2a3bfc168"
+                            Content = "Content of post6",
+                            Title = "Post6",
+                            UserId = "d1a2b740-f3a3-4e1e-8667-b2d0bb622828"
                         });
                 });
 
@@ -230,7 +240,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("15.02.2004");
+                        .HasDefaultValue("16.02.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -281,7 +291,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("15.02.2022 16:33");
+                        .HasDefaultValue("16.02.2022 14:49");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -313,7 +323,7 @@ namespace WebApi.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5c38b3e4-4848-4f47-a9ee-1013e7a42260",
+                            Id = "8ec3c014-36a2-46f1-9917-41f67fd65ccd",
                             AccessFailedCount = 0,
                             BirthdayDate = "10.09.1998",
                             ConcurrencyStamp = "77d5ec9f-e202-4ebe-bb56-639cfc03e0c3",
@@ -326,7 +336,7 @@ namespace WebApi.DAL.Migrations
                             NormalizedUserName = "SASHA.VYSOTSKI@GMAIL.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEBkYorHLrudV7o/AMc9bEGtaudVjE2Rsrzny9W4orlEeHLNG3oBhrbu4F27j5wRGbg==",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = "15.02.2022 16:33",
+                            RegistrationDate = "16.02.2022 14:49",
                             SecurityStamp = "SUXDS2ENOSQRGR3PQ4USLV4UT7Z6GU4I",
                             Surname = "Vysotski",
                             TwoFactorEnabled = false,
@@ -334,7 +344,7 @@ namespace WebApi.DAL.Migrations
                         },
                         new
                         {
-                            Id = "d705de06-1d3e-4e2d-be5f-77e2a3bfc168",
+                            Id = "d1a2b740-f3a3-4e1e-8667-b2d0bb622828",
                             AccessFailedCount = 0,
                             BirthdayDate = "14.06.1976",
                             ConcurrencyStamp = "fc5df5ce-a97d-4551-a7b2-7afa33a80c42",
@@ -347,7 +357,7 @@ namespace WebApi.DAL.Migrations
                             NormalizedUserName = "E.SAMOILENKO@MAIL.RU",
                             PasswordHash = "AQAAAAEAACcQAAAAEOO9jCT7O2L9y10Ft4LsKDl3blzxlBqKoPVWzKp0ftUg1Cv73Vc5B8Al8xN5TD+e8w==",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = "15.02.2022 16:33",
+                            RegistrationDate = "16.02.2022 14:49",
                             SecurityStamp = "U43GQLZMYDGUOQWHVXLJBVOGMSRXWVLE",
                             Surname = "Samoilenko",
                             TwoFactorEnabled = false,

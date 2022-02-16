@@ -13,7 +13,9 @@ namespace WebApi.DAL.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string PostContent { get; set; }
+        public string Title { get; set; }
+        [Required]
+        public string Content { get; set; }
 
         [Required]
         public string UserId { get; set; }

@@ -15,6 +15,7 @@ namespace WebApi.BLL
             //services.AddTransient<ICategoryService, CategoryService>();
             //services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IPostService, PostService>();
             //services.AddTransient<IOrderService, OrderService>();
         }
     }

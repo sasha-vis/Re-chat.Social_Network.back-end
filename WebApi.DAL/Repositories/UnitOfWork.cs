@@ -16,6 +16,8 @@ namespace WebApi.DAL.Repositories
 
         private readonly UserManager<User> _userManager;
 
+        private IPostRepository<Post> _postRepository;
+
         //private IOrderRepository<Order> _orderRepository;
 
 
@@ -55,6 +57,16 @@ namespace WebApi.DAL.Repositories
                 if (_userRepository == null)
                     _userRepository = new UserRepository(db, _configuration, _userManager);
                 return _userRepository;
+            }
+        }
+
+        public IPostRepository<Post> Posts
+        {
+            get
+            {
+                if (_postRepository == null)
+                    _postRepository = new PostRepository(db);
+                return _postRepository;
             }
         }
 

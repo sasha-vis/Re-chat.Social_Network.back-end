@@ -35,6 +35,8 @@ namespace WebApi.BLL.Services
         {
             var user = _mapper.Map<User>(model);
 
+            user.SecurityStamp = Guid.NewGuid().ToString();
+
             if (user.BirthdayDate == "string")
             {
                 user.BirthdayDate = null;
@@ -44,7 +46,7 @@ namespace WebApi.BLL.Services
                 user.Gender = null;
             }
 
-            return _unitOfWork.Users.Create(user, model.Password);
+            return _unitOfWork.Users.Create(user, model.Password).Result;
         }
     }
 }

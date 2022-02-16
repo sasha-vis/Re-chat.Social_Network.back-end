@@ -85,12 +85,12 @@ namespace WebApi.DAL.DefaultInfoForDatabase
 
             var posts = new List<Post>()
             {
-                new Post(){ Id = 1, PostContent = "Post1", UserId = sasha.Id },
-                new Post(){ Id = 2, PostContent = "Post2", UserId = elena.Id },
-                new Post(){ Id = 3, PostContent = "Post3", UserId = sasha.Id },
-                new Post(){ Id = 4, PostContent = "Post4", UserId = elena.Id },
-                new Post(){ Id = 5, PostContent = "Post5", UserId = sasha.Id },
-                new Post(){ Id = 6, PostContent = "Post6", UserId = elena.Id }
+                new Post(){ Id = 1, Title = "Post1", Content = "Content of post1", UserId = sasha.Id },
+                new Post(){ Id = 2, Title = "Post2", Content = "Content of post2", UserId = elena.Id },
+                new Post(){ Id = 3, Title = "Post3", Content = "Content of post3", UserId = sasha.Id },
+                new Post(){ Id = 4, Title = "Post4", Content = "Content of post4", UserId = elena.Id },
+                new Post(){ Id = 5, Title = "Post5", Content = "Content of post5", UserId = sasha.Id },
+                new Post(){ Id = 6, Title = "Post6", Content = "Content of post6", UserId = elena.Id }
             };
 
             modelBuilder.Entity<Post>().HasData(posts);

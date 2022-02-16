@@ -6,7 +6,7 @@ namespace WebApi.DAL.Interfaces
     {
         public IEnumerable<T> GetList();
         //public T GetItem(int id);
-        public JwtSecurityToken Create(T item, string password);
+        public Task<JwtSecurityToken> Create(T item, string password);
         //public void Edit(T item);
         //public void Delete(int Id);
     }
