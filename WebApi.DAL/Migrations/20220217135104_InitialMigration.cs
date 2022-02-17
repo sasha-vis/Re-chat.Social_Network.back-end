@@ -31,8 +31,8 @@ namespace WebApi.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Male"),
-                    BirthdayDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "16.02.2004"),
-                    RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "16.02.2022 14:49"),
+                    BirthdayDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "17.02.2004"),
+                    RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "17.02.2022 16:51"),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -178,29 +178,6 @@ namespace WebApi.DAL.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "BirthdayDate", "ConcurrencyStamp", "Email", "EmailConfirmed", "Gender", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegistrationDate", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "8ec3c014-36a2-46f1-9917-41f67fd65ccd", 0, "10.09.1998", "77d5ec9f-e202-4ebe-bb56-639cfc03e0c3", "sasha.vysotski@gmail.com", false, "Male", false, null, "Aleksandr", "SASHA.VYSOTSKI@GMAIL.COM", "SASHA.VYSOTSKI@GMAIL.COM", "AQAAAAEAACcQAAAAEBkYorHLrudV7o/AMc9bEGtaudVjE2Rsrzny9W4orlEeHLNG3oBhrbu4F27j5wRGbg==", null, false, "16.02.2022 14:49", "SUXDS2ENOSQRGR3PQ4USLV4UT7Z6GU4I", "Vysotski", false, "sasha.vysotski@gmail.com" });
-
-            migrationBuilder.InsertData(
-                table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "BirthdayDate", "ConcurrencyStamp", "Email", "EmailConfirmed", "Gender", "LockoutEnabled", "LockoutEnd", "Name", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegistrationDate", "SecurityStamp", "Surname", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "d1a2b740-f3a3-4e1e-8667-b2d0bb622828", 0, "14.06.1976", "fc5df5ce-a97d-4551-a7b2-7afa33a80c42", "e.samoilemko@mail.ru", false, "Female", false, null, "Elena", "E.SAMOILENKO@MAIL.RU", "E.SAMOILENKO@MAIL.RU", "AQAAAAEAACcQAAAAEOO9jCT7O2L9y10Ft4LsKDl3blzxlBqKoPVWzKp0ftUg1Cv73Vc5B8Al8xN5TD+e8w==", null, false, "16.02.2022 14:49", "U43GQLZMYDGUOQWHVXLJBVOGMSRXWVLE", "Samoilenko", false, "e.samoilemko@mail.ru" });
-
-            migrationBuilder.InsertData(
-                table: "Posts",
-                columns: new[] { "Id", "Content", "Title", "UserId" },
-                values: new object[,]
-                {
-                    { 1, "Content of post1", "Post1", "8ec3c014-36a2-46f1-9917-41f67fd65ccd" },
-                    { 2, "Content of post2", "Post2", "d1a2b740-f3a3-4e1e-8667-b2d0bb622828" },
-                    { 3, "Content of post3", "Post3", "8ec3c014-36a2-46f1-9917-41f67fd65ccd" },
-                    { 4, "Content of post4", "Post4", "d1a2b740-f3a3-4e1e-8667-b2d0bb622828" },
-                    { 5, "Content of post5", "Post5", "8ec3c014-36a2-46f1-9917-41f67fd65ccd" },
-                    { 6, "Content of post6", "Post6", "d1a2b740-f3a3-4e1e-8667-b2d0bb622828" }
                 });
 
             migrationBuilder.CreateIndex(

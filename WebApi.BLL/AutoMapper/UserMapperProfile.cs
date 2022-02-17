@@ -10,7 +10,10 @@ namespace WebApi.BLL.AutoMapper
         {
             CreateMap<User, UserGetVM>();
 
-            CreateMap<UserPostVM, User>()
+            CreateMap<UserRegisterVM, User>()
+                .ForMember(c => c.UserName, opt => opt.MapFrom(c => c.Email));
+
+            CreateMap<UserLoginVM, User>()
                 .ForMember(c => c.UserName, opt => opt.MapFrom(c => c.Email));
 
             //CreateMap<UserEditVM, User>();

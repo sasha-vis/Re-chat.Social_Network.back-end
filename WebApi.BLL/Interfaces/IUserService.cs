@@ -11,6 +11,10 @@ namespace WebApi.BLL.Interfaces
     public interface IUserService
     {
         public IEnumerable<UserGetVM> GetList();
-        public JwtSecurityToken Post(UserPostVM model);
+        public UserGetVM GetItem(string id);
+
+        public JwtSecurityToken Register(UserRegisterVM model);
+
+        public JwtSecurityToken Login(UserLoginVM model);
     }
 }

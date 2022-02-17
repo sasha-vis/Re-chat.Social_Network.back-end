@@ -8,5 +8,6 @@
         public string Gender { get; set; }
         public string BirthdayDate { get; set; }
         public string RegistrationDate { get; set; }
+        public string Email { get; set; }
     }
 }

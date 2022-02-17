@@ -180,50 +180,6 @@ namespace WebApi.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Content = "Content of post1",
-                            Title = "Post1",
-                            UserId = "8ec3c014-36a2-46f1-9917-41f67fd65ccd"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Content = "Content of post2",
-                            Title = "Post2",
-                            UserId = "d1a2b740-f3a3-4e1e-8667-b2d0bb622828"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Content = "Content of post3",
-                            Title = "Post3",
-                            UserId = "8ec3c014-36a2-46f1-9917-41f67fd65ccd"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Content = "Content of post4",
-                            Title = "Post4",
-                            UserId = "d1a2b740-f3a3-4e1e-8667-b2d0bb622828"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Content = "Content of post5",
-                            Title = "Post5",
-                            UserId = "8ec3c014-36a2-46f1-9917-41f67fd65ccd"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Content = "Content of post6",
-                            Title = "Post6",
-                            UserId = "d1a2b740-f3a3-4e1e-8667-b2d0bb622828"
-                        });
                 });
 
             modelBuilder.Entity("WebApi.DAL.Entities.User", b =>
@@ -238,7 +194,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("16.02.2004");
+                        .HasDefaultValue("17.02.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -289,7 +245,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("16.02.2022 14:49");
+                        .HasDefaultValue("17.02.2022 16:51");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -317,50 +273,6 @@ namespace WebApi.DAL.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "8ec3c014-36a2-46f1-9917-41f67fd65ccd",
-                            AccessFailedCount = 0,
-                            BirthdayDate = "10.09.1998",
-                            ConcurrencyStamp = "77d5ec9f-e202-4ebe-bb56-639cfc03e0c3",
-                            Email = "sasha.vysotski@gmail.com",
-                            EmailConfirmed = false,
-                            Gender = "Male",
-                            LockoutEnabled = false,
-                            Name = "Aleksandr",
-                            NormalizedEmail = "SASHA.VYSOTSKI@GMAIL.COM",
-                            NormalizedUserName = "SASHA.VYSOTSKI@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBkYorHLrudV7o/AMc9bEGtaudVjE2Rsrzny9W4orlEeHLNG3oBhrbu4F27j5wRGbg==",
-                            PhoneNumberConfirmed = false,
-                            RegistrationDate = "16.02.2022 14:49",
-                            SecurityStamp = "SUXDS2ENOSQRGR3PQ4USLV4UT7Z6GU4I",
-                            Surname = "Vysotski",
-                            TwoFactorEnabled = false,
-                            UserName = "sasha.vysotski@gmail.com"
-                        },
-                        new
-                        {
-                            Id = "d1a2b740-f3a3-4e1e-8667-b2d0bb622828",
-                            AccessFailedCount = 0,
-                            BirthdayDate = "14.06.1976",
-                            ConcurrencyStamp = "fc5df5ce-a97d-4551-a7b2-7afa33a80c42",
-                            Email = "e.samoilemko@mail.ru",
-                            EmailConfirmed = false,
-                            Gender = "Female",
-                            LockoutEnabled = false,
-                            Name = "Elena",
-                            NormalizedEmail = "E.SAMOILENKO@MAIL.RU",
-                            NormalizedUserName = "E.SAMOILENKO@MAIL.RU",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOO9jCT7O2L9y10Ft4LsKDl3blzxlBqKoPVWzKp0ftUg1Cv73Vc5B8Al8xN5TD+e8w==",
-                            PhoneNumberConfirmed = false,
-                            RegistrationDate = "16.02.2022 14:49",
-                            SecurityStamp = "U43GQLZMYDGUOQWHVXLJBVOGMSRXWVLE",
-                            Surname = "Samoilenko",
-                            TwoFactorEnabled = false,
-                            UserName = "e.samoilemko@mail.ru"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

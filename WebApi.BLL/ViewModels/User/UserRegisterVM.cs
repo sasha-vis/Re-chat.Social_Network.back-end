@@ -2,7 +2,7 @@
 
 namespace WebApi.BLL.ViewModels.User
 {
-    public class UserPostVM
+    public class UserRegisterVM
     {
         [Required(ErrorMessage = "Name of the user can't be empty")]
         [RegularExpression(@"^[a-zA-Z\s]*$", ErrorMessage = "Name of the user must contain only latin letters")]

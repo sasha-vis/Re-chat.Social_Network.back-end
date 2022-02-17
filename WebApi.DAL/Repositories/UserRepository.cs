@@ -38,6 +38,16 @@ namespace WebApi.DAL.Repositories
             return users;
         }
 
+        public User GetItem(string Id)
+        {
+
+            var user = _db.Users
+                .Where(c => c.Id == Id)
+                .FirstOrDefault();
+
+            return user;
+        }
+
         public JwtSecurityToken Login(User model, string password)
         {
             var user =  _userManager.FindByNameAsync(model.Email).Result;
@@ -47,6 +57,7 @@ namespace WebApi.DAL.Repositories
                 {
                     new Claim(ClaimTypes.Name, user.Email),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim("Id", user.Id)
                 };
 
                 var token = GetToken(authClaims);
@@ -57,7 +68,7 @@ namespace WebApi.DAL.Repositories
         }
 
 
-        public async Task<JwtSecurityToken> Create(User model, string password)
+        public async Task<JwtSecurityToken> Register(User model, string password)
         {
             var userExists = _userManager.FindByNameAsync(model.Email).Result;
             if (userExists == null)

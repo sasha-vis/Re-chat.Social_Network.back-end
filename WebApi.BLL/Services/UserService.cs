@@ -30,8 +30,16 @@ namespace WebApi.BLL.Services
 
             return result;
         }
+        public UserGetVM GetItem(string id)
+        {
+            var users = _unitOfWork.Users.GetItem(id);
 
-        public JwtSecurityToken Post(UserPostVM model)
+            var result = _mapper.Map<UserGetVM>(users);
+
+            return result;
+        }
+
+        public JwtSecurityToken Register(UserRegisterVM model)
         {
             var user = _mapper.Map<User>(model);
 
@@ -46,7 +54,14 @@ namespace WebApi.BLL.Services
                 user.Gender = null;
             }
 
-            return _unitOfWork.Users.Create(user, model.Password).Result;
+            return _unitOfWork.Users.Register(user, model.Password).Result;
+        }
+
+        public JwtSecurityToken Login(UserLoginVM model)
+        {
+            var user = _mapper.Map<User>(model);
+
+            return _unitOfWork.Users.Login(user, model.Password);
         }
     }
 }

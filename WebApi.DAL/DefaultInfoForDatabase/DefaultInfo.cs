@@ -49,51 +49,51 @@ namespace WebApi.DAL.DefaultInfoForDatabase
             //    .WithMany(x => x.ProductsOrders)
             //    .HasForeignKey(x => x.OrderId);
 
-            var sasha = new User()
-            {
-                Name = "Aleksandr",
-                Surname = "Vysotski",
-                Email = "sasha.vysotski@gmail.com",
-                NormalizedEmail = "SASHA.VYSOTSKI@GMAIL.COM",
-                UserName = "sasha.vysotski@gmail.com",
-                NormalizedUserName = "SASHA.VYSOTSKI@GMAIL.COM",
-                PasswordHash = "AQAAAAEAACcQAAAAEBkYorHLrudV7o/AMc9bEGtaudVjE2Rsrzny9W4orlEeHLNG3oBhrbu4F27j5wRGbg==",
-                SecurityStamp = "SUXDS2ENOSQRGR3PQ4USLV4UT7Z6GU4I",
-                ConcurrencyStamp = "77d5ec9f-e202-4ebe-bb56-639cfc03e0c3",
-                RegistrationDate = dateTimeNow,
-                BirthdayDate = "10.09.1998",
-                Gender = "Male"
-            };
-            var elena = new User()
-            {
-                Name = "Elena",
-                Surname = "Samoilenko",
-                Email = "e.samoilemko@mail.ru",
-                NormalizedEmail = "E.SAMOILENKO@MAIL.RU",
-                UserName = "e.samoilemko@mail.ru",
-                NormalizedUserName = "E.SAMOILENKO@MAIL.RU",
-                PasswordHash = "AQAAAAEAACcQAAAAEOO9jCT7O2L9y10Ft4LsKDl3blzxlBqKoPVWzKp0ftUg1Cv73Vc5B8Al8xN5TD+e8w==",
-                SecurityStamp = "U43GQLZMYDGUOQWHVXLJBVOGMSRXWVLE",
-                ConcurrencyStamp = "fc5df5ce-a97d-4551-a7b2-7afa33a80c42",
-                RegistrationDate = dateTimeNow,
-                BirthdayDate = "14.06.1976",
-                Gender = "Female"
-            };
+            //var sasha = new User()
+            //{
+            //    Name = "Aleksandr",
+            //    Surname = "Vysotski",
+            //    Email = "sasha.vysotski@gmail.com",
+            //    NormalizedEmail = "SASHA.VYSOTSKI@GMAIL.COM",
+            //    UserName = "sasha.vysotski@gmail.com",
+            //    NormalizedUserName = "SASHA.VYSOTSKI@GMAIL.COM",
+            //    PasswordHash = "AQAAAAEAACcQAAAAEBkYorHLrudV7o/AMc9bEGtaudVjE2Rsrzny9W4orlEeHLNG3oBhrbu4F27j5wRGbg==",
+            //    SecurityStamp = "SUXDS2ENOSQRGR3PQ4USLV4UT7Z6GU4I",
+            //    ConcurrencyStamp = "77d5ec9f-e202-4ebe-bb56-639cfc03e0c3",
+            //    RegistrationDate = dateTimeNow,
+            //    BirthdayDate = "10.09.1998",
+            //    Gender = "Male"
+            //};
+            //var elena = new User()
+            //{
+            //    Name = "Elena",
+            //    Surname = "Samoilenko",
+            //    Email = "e.samoilemko@mail.ru",
+            //    NormalizedEmail = "E.SAMOILENKO@MAIL.RU",
+            //    UserName = "e.samoilemko@mail.ru",
+            //    NormalizedUserName = "E.SAMOILENKO@MAIL.RU",
+            //    PasswordHash = "AQAAAAEAACcQAAAAEOO9jCT7O2L9y10Ft4LsKDl3blzxlBqKoPVWzKp0ftUg1Cv73Vc5B8Al8xN5TD+e8w==",
+            //    SecurityStamp = "U43GQLZMYDGUOQWHVXLJBVOGMSRXWVLE",
+            //    ConcurrencyStamp = "fc5df5ce-a97d-4551-a7b2-7afa33a80c42",
+            //    RegistrationDate = dateTimeNow,
+            //    BirthdayDate = "14.06.1976",
+            //    Gender = "Female"
+            //};
 
-            modelBuilder.Entity<User>().HasData(sasha);
-            modelBuilder.Entity<User>().HasData(elena);
+            //modelBuilder.Entity<User>().HasData(sasha);
+            //modelBuilder.Entity<User>().HasData(elena);
 
-            var posts = new List<Post>()
-            {
-                new Post(){ Id = 1, Title = "Post1", Content = "Content of post1", UserId = sasha.Id },
-                new Post(){ Id = 2, Title = "Post2", Content = "Content of post2", UserId = elena.Id },
-                new Post(){ Id = 3, Title = "Post3", Content = "Content of post3", UserId = sasha.Id },
-                new Post(){ Id = 4, Title = "Post4", Content = "Content of post4", UserId = elena.Id },
-                new Post(){ Id = 5, Title = "Post5", Content = "Content of post5", UserId = sasha.Id },
-                new Post(){ Id = 6, Title = "Post6", Content = "Content of post6", UserId = elena.Id }
-            };
+            //var posts = new List<Post>()
+            //{
+            //    new Post(){ Id = 1, Title = "Post1", Content = "Content of post1", UserId = sasha.Id },
+            //    new Post(){ Id = 2, Title = "Post2", Content = "Content of post2", UserId = elena.Id },
+            //    new Post(){ Id = 3, Title = "Post3", Content = "Content of post3", UserId = sasha.Id },
+            //    new Post(){ Id = 4, Title = "Post4", Content = "Content of post4", UserId = elena.Id },
+            //    new Post(){ Id = 5, Title = "Post5", Content = "Content of post5", UserId = sasha.Id },
+            //    new Post(){ Id = 6, Title = "Post6", Content = "Content of post6", UserId = elena.Id }
+            //};
 
-            modelBuilder.Entity<Post>().HasData(posts);
+            //modelBuilder.Entity<Post>().HasData(posts);
 
             //var comments = new List<Comment>()
             //{
