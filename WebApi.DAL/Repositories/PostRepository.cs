@@ -22,9 +22,54 @@ namespace WebApi.DAL.Repositories
         {
             var posts = _db.Posts
                 .Include(p => p.User);
-            //.Include(p => p.City);
 
             return posts;
+        }
+
+        public Post GetItem(int Id)
+        {
+
+            var post = _db.Posts
+                .Where(c => c.Id == Id)
+                .Include(p => p.User)
+                .FirstOrDefault();
+
+            return post;
+        }
+
+        public void Create(Post model)
+        {
+            _db.Posts.Add(model);
+            _db.SaveChanges();
+        }
+
+        public void Edit(Post model)
+        {
+            var post = _db.Posts
+                  .Where(post => post.Id == model.Id)
+                  .FirstOrDefault();
+
+            if (post != null)
+            {
+                post.Title = model.Title;
+                post.Content = model.Content;
+                _db.Posts.Update(post);
+                _db.SaveChanges();
+            }
+
+        }
+
+        public void Delete(int id)
+        {
+            var post = _db.Posts
+                  .Where(post => post.Id == id)
+                  .FirstOrDefault();
+
+            if (post != null)
+            {
+                _db.Posts.Remove(post);
+                _db.SaveChanges();
+            }
         }
     }
 }

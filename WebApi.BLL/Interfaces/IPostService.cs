@@ -10,5 +10,9 @@ namespace WebApi.BLL.Interfaces
     public interface IPostService
     {
         public IEnumerable<PostGetVM> GetList();
+        public PostGetVM GetItem(int id);
+        public void Create(PostCreateVM model);
+        public void Edit(PostEditVM model);
+        public void Delete(int id);
     }
 }

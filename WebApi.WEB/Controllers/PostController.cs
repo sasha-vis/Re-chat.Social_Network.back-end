@@ -19,5 +19,46 @@ namespace WebApi.WEB.Controllers
             var result = _postService.GetList();
             return result;
         }
+
+        [HttpGet("{id}")]
+        public PostGetVM Get(int id)
+        {
+            var result = _postService.GetItem(id);
+            return result;
+        }
+
+        [HttpPost]
+        public IActionResult Post(PostCreateVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            _postService.Create(model);
+
+            return Ok(_postService.GetList());
+        }
+
+        [HttpPut]
+        public IActionResult Put(PostEditVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            _postService.Edit(model);
+            return Ok(_postService.GetList());
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+            _postService.Delete(id);
+            return Ok(_postService.GetList());
+        }
     }
 }
