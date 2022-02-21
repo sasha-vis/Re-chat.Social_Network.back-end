@@ -21,11 +21,11 @@ namespace WebApi.WEB.Controllers
             return result;
         }
 
-        [HttpGet("{id}")]
-        public UserGetVM Get(string id)
+        [HttpGet]
+        [Route("Profile")]
+        public UserGetVM GetProfile()
         {
-            var result = _userService.GetItem(id);
-            return result;
+            return _userService.GetItem(User.Identity.Name);
         }
     }
 }

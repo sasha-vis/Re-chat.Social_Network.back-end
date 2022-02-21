@@ -10,7 +10,9 @@ namespace WebApi.DAL.Interfaces
     {
         public IEnumerable<T> GetList();
         public T GetItem(int id);
-        public void Create(T item);
+
+        public IEnumerable<T> GetMyPosts(string userName);
+        public void Create(T item, string userName);
         public void Edit(T item);
         public void Delete(int Id);
     }

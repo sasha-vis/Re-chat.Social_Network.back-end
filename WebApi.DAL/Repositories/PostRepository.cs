@@ -37,8 +37,20 @@ namespace WebApi.DAL.Repositories
             return post;
         }
 
-        public void Create(Post model)
+        public IEnumerable<Post> GetMyPosts(string userName)
         {
+            var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
+            var result = _db.Posts
+                .Where(c => c.UserId == user.Id)
+                .ToList();
+
+            return result;
+        }
+
+        public void Create(Post model, string userName)
+        {
+            var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
+            model.UserId = user.Id;
             _db.Posts.Add(model);
             _db.SaveChanges();
         }

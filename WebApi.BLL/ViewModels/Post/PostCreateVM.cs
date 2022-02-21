@@ -13,8 +13,5 @@ namespace WebApi.BLL.ViewModels.Post
         public string Title { get; set; }
         [Required]
         public string Content { get; set; }
-
-        [Required]
-        public string UserId { get; set; }
     }
 }

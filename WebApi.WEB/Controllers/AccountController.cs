@@ -25,8 +25,7 @@ namespace WebApi.WEB.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(result),
-                    expiration = result.ValidTo,
-                    user = result.Claims.Select(claim => claim.Value)
+                    expiration = result.ValidTo
                 });
             }
             return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists! or User Create Failed" });
@@ -42,8 +41,7 @@ namespace WebApi.WEB.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(result),
-                    expiration = result.ValidTo,
-                    user = result.Claims.Select(claim => claim.Value)
+                    expiration = result.ValidTo
                 });
             }
             return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists! or User Create Failed" });

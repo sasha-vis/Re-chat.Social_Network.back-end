@@ -30,9 +30,9 @@ namespace WebApi.BLL.Services
 
             return result;
         }
-        public UserGetVM GetItem(string id)
+        public UserGetVM GetItem(string userName)
         {
-            var users = _unitOfWork.Users.GetItem(id);
+            var users = _unitOfWork.Users.GetItem(userName);
 
             var result = _mapper.Map<UserGetVM>(users);
 

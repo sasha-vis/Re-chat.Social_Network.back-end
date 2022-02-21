@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BLL.Interfaces;
 using WebApi.BLL.ViewModels.Post;
@@ -27,6 +28,15 @@ namespace WebApi.WEB.Controllers
             return result;
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet]
+        [Route("MyPosts")]
+        public IEnumerable<PostGetVM> GetMyPosts()
+        {
+            return _postService.GetMyPosts(User.Identity.Name);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         public IActionResult Post(PostCreateVM model)
         {
@@ -34,11 +44,12 @@ namespace WebApi.WEB.Controllers
             {
                 return BadRequest();
             }
-            _postService.Create(model);
+            _postService.Create(model, User.Identity.Name);
 
-            return Ok(_postService.GetList());
+            return Ok(_postService.GetMyPosts(User.Identity.Name));
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPut]
         public IActionResult Put(PostEditVM model)
         {
@@ -50,6 +61,7 @@ namespace WebApi.WEB.Controllers
             return Ok(_postService.GetList());
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -58,7 +70,7 @@ namespace WebApi.WEB.Controllers
                 return BadRequest();
             }
             _postService.Delete(id);
-            return Ok(_postService.GetList());
+            return Ok(_postService.GetMyPosts(User.Identity.Name));
         }
     }
 }

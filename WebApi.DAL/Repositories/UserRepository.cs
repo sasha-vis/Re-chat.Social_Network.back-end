@@ -38,14 +38,14 @@ namespace WebApi.DAL.Repositories
             return users;
         }
 
-        public User GetItem(string Id)
+        public User GetItem(string userName)
         {
-
-            var user = _db.Users
-                .Where(c => c.Id == Id)
+            var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
+            var result = _db.Users
+                .Where(c => c.Id == user.Id)
                 .FirstOrDefault();
 
-            return user;
+            return result;
         }
 
         public JwtSecurityToken Login(User model, string password)

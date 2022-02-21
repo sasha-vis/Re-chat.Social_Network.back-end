@@ -39,10 +39,19 @@ namespace WebApi.BLL.Services
             return result;
         }
 
-        public void Create(PostCreateVM model)
+        public IEnumerable<PostGetVM> GetMyPosts(string userName)
+        {
+            var posts = _unitOfWork.Posts.GetMyPosts(userName);
+
+            var result = _mapper.Map<IEnumerable<PostGetVM>>(posts);
+
+            return result;
+        }
+
+        public void Create(PostCreateVM model, string userName)
         {
             var post = _mapper.Map<Post>(model);
-            _unitOfWork.Posts.Create(post);
+            _unitOfWork.Posts.Create(post, userName);
         }
 
         public void Edit(PostEditVM model)
