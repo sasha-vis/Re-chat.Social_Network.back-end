@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -42,6 +43,7 @@ namespace WebApi.DAL.Repositories
         {
             var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
             var result = _db.Users
+                .Include(u => u.Posts)
                 .Where(c => c.Id == user.Id)
                 .FirstOrDefault();
 

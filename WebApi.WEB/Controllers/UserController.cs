@@ -22,6 +22,13 @@ namespace WebApi.WEB.Controllers
         }
 
         [HttpGet]
+        [Route("Email")]
+        public String GetHeader()
+        {
+            return User.Identity.Name;
+        }
+
+        [HttpGet]
         [Route("Profile")]
         public UserGetVM GetProfile()
         {
