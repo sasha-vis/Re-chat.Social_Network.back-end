@@ -21,7 +21,10 @@ namespace WebApi.DAL.Repositories
         public IEnumerable<Post> GetList()
         {
             var posts = _db.Posts
-                .Include(p => p.User);
+                 .Include(p => p.User)
+                .Include(l => l.Likes)
+                .Include(l => l.Comments)
+                .ToList();
 
             return posts;
         }
@@ -32,6 +35,8 @@ namespace WebApi.DAL.Repositories
             var post = _db.Posts
                 .Where(c => c.Id == Id)
                 .Include(p => p.User)
+                .Include(l => l.Likes)
+                .Include(l => l.Comments)
                 .FirstOrDefault();
 
             return post;
@@ -39,9 +44,13 @@ namespace WebApi.DAL.Repositories
 
         public IEnumerable<Post> GetMyPosts(string userName)
         {
-            var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
+            var user = _db.Users
+                .FirstOrDefault(u => u.UserName == userName);
             var result = _db.Posts
-                .Where(c => c.UserId == user.Id)
+                   .Include(p => p.User)
+                   .Where(c => c.UserId == user.Id)
+                .Include(l => l.Likes)
+                .Include(l => l.Comments)
                 .ToList();
 
             return result;

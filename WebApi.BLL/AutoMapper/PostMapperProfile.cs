@@ -13,7 +13,9 @@ namespace WebApi.BLL.AutoMapper
     {
         public PostMapperProfile()
         {
-            CreateMap<Post, PostGetVM>();
+            CreateMap<Post, PostGetVM>()
+                .ForMember(c => c.UserName, opt => opt.MapFrom(c => c.User.Name))
+                .ForMember(c => c.UserSurname, opt => opt.MapFrom(c => c.User.Surname));
 
             CreateMap<PostCreateVM, Post>();
 

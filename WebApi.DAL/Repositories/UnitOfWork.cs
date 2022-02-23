@@ -17,6 +17,8 @@ namespace WebApi.DAL.Repositories
         private readonly UserManager<User> _userManager;
 
         private IPostRepository<Post> _postRepository;
+        private ILikeRepository<Like> _likeRepository;
+        private ICommentRepository<Comment> _commentRepository;
 
         //private IOrderRepository<Order> _orderRepository;
 
@@ -67,6 +69,26 @@ namespace WebApi.DAL.Repositories
                 if (_postRepository == null)
                     _postRepository = new PostRepository(db);
                 return _postRepository;
+            }
+        }
+
+        public ILikeRepository<Like> Likes
+        {
+            get
+            {
+                if (_likeRepository == null)
+                    _likeRepository = new LikeRepository(db);
+                return _likeRepository;
+            }
+        }
+
+        public ICommentRepository<Comment> Comments
+        {
+            get
+            {
+                if (_commentRepository == null)
+                    _commentRepository = new CommentRepository(db);
+                return _commentRepository;
             }
         }
 

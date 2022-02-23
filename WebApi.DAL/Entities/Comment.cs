@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,11 +12,14 @@ namespace WebApi.DAL.Entities
     {
         [Key]
         public int Id { get; set; }
-        public int? UserId { get; set; }
-        public int? PostId { get; set; }
-        public string CommentContent { get; set; }
+        public string? AuthorId { get; set; }
+        public User? Author { get; set; }
+        public string CommentText { get; set; }
 
-        public User User { get; set; }
+        [ForeignKey("Post")]
+        public int PostId { get; set; }
         public Post Post { get; set; }
+        public DateTime PostedOn { get; set; } = DateTime.Now;
     }
 }
+
