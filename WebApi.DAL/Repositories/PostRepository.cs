@@ -26,7 +26,9 @@ namespace WebApi.DAL.Repositories
                 .Include(l => l.Comments)
                 .ToList();
 
-            return posts;
+            var result = posts.OrderByDescending(x => x.PostDate).ToList();
+
+            return result;
         }
 
         public Post GetItem(int Id)
@@ -46,20 +48,26 @@ namespace WebApi.DAL.Repositories
         {
             var user = _db.Users
                 .FirstOrDefault(u => u.UserName == userName);
-            var result = _db.Posts
+            var posts = _db.Posts
                    .Include(p => p.User)
                    .Where(c => c.UserId == user.Id)
                 .Include(l => l.Likes)
                 .Include(l => l.Comments)
                 .ToList();
 
+            var result = posts.OrderBy(x => x.PostDate).Reverse().ToList();
+
             return result;
         }
 
         public void Create(Post model, string userName)
         {
+            //DateTime date = DateTime.Now;
+            //string dateString = date.ToString("g");
+
             var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
             model.UserId = user.Id;
+            model.PostDate = DateTime.Now;
             _db.Posts.Add(model);
             _db.SaveChanges();
         }

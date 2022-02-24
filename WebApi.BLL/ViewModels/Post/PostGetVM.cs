@@ -18,6 +18,8 @@ namespace WebApi.BLL.ViewModels.Post
         public string UserName { get; set; }
         public string UserSurname { get; set; }
 
+        public DateTime PostDate { get; set; }
+
         public List<LikeForPostVM> Likes { get; set; }
         public List<CommentForPostVM> Comments { get; set; }
     }

@@ -43,8 +43,8 @@ namespace WebApi.DAL.Repositories
         {
             var user = _db.Users.FirstOrDefault(u => u.UserName == userName);
             var result = _db.Users
-                .Include(u => u.Posts)
                 .Where(c => c.Id == user.Id)
+                .Include(u => u.Posts)
                 .FirstOrDefault();
 
             return result;

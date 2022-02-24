@@ -18,6 +18,14 @@ namespace WebApi.DAL.Repositories
             _db = context;
         }
 
+        public int CountLikesOfUser (string id)
+        {
+            var likes = _db.Likes
+                .Where(l => l.UserId == id)
+                .ToList();
+            return likes.Count;
+        }
+
         public void Create(Like like)
         {
             var likeDb = _db.Likes

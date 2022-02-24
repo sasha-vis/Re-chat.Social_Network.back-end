@@ -32,6 +32,10 @@ namespace WebApi.DAL.Repositories
 
         public void Create(Comment comment)
         {
+            //DateTime date = DateTime.Now;
+            //string dateString = date.ToString("g");
+
+            comment.CommentDate = DateTime.Now;
             _db.Comments.Add(comment);
             _db.SaveChangesAsync();
         }

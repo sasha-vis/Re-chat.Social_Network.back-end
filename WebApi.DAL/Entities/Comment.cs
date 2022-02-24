@@ -19,7 +19,7 @@ namespace WebApi.DAL.Entities
         [ForeignKey("Post")]
         public int PostId { get; set; }
         public Post Post { get; set; }
-        public DateTime PostedOn { get; set; } = DateTime.Now;
+        public DateTime CommentDate { get; set; }
     }
 }
 

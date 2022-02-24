@@ -8,6 +8,7 @@ namespace WebApi.DAL.Interfaces
 {
     public interface ILikeRepository<T> where T : class
     {
+        int CountLikesOfUser(string id);
 
         public void Create(T item);
 

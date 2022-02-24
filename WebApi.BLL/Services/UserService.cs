@@ -30,11 +30,13 @@ namespace WebApi.BLL.Services
 
             return result;
         }
+
         public UserGetVM GetItem(string userName)
         {
-            var users = _unitOfWork.Users.GetItem(userName);
+            var user = _unitOfWork.Users.GetItem(userName);
 
-            var result = _mapper.Map<UserGetVM>(users);
+            var result = _mapper.Map<UserGetVM>(user);
+            result.CountLikes = _unitOfWork.Likes.CountLikesOfUser(user.Id);
 
             return result;
         }

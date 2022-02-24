@@ -18,5 +18,7 @@ namespace WebApi.BLL.ViewModels.Comment
 
         public string UserName { get; set; }
         public string UserSurname { get; set; }
+
+        public DateTime CommentDate { get; set; }
     }
 }
