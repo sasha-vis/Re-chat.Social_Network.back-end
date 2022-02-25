@@ -20,6 +20,7 @@ namespace WebApi.BLL.ViewModels.User
         public string Email { get; set; }
 
         public int CountLikes { get; set; } 
+        public int CountBookmarks { get; set; }
 
         public List<PostGetVM> Posts { get; set; }
     }

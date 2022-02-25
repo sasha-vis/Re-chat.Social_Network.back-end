@@ -24,11 +24,11 @@ namespace WebApi.DAL.Repositories
                  .Include(p => p.User)
                 .Include(l => l.Likes)
                 .Include(l => l.Comments)
+                .Include(l => l.Bookmarks)
+                .OrderByDescending(x => x.PostDate)
                 .ToList();
 
-            var result = posts.OrderByDescending(x => x.PostDate).ToList();
-
-            return result;
+            return posts;
         }
 
         public Post GetItem(int Id)
@@ -39,26 +39,53 @@ namespace WebApi.DAL.Repositories
                 .Include(p => p.User)
                 .Include(l => l.Likes)
                 .Include(l => l.Comments)
+                .Include(l => l.Bookmarks)
                 .FirstOrDefault();
 
             return post;
         }
 
-        public IEnumerable<Post> GetMyPosts(string userName)
-        {
-            var user = _db.Users
-                .FirstOrDefault(u => u.UserName == userName);
-            var posts = _db.Posts
-                   .Include(p => p.User)
-                   .Where(c => c.UserId == user.Id)
-                .Include(l => l.Likes)
-                .Include(l => l.Comments)
-                .ToList();
+        //public IEnumerable<Post> GetMyPosts(string userName)
+        //{
+        //    var user = _db.Users
+        //        .FirstOrDefault(u => u.UserName == userName);
+        //    var posts = _db.Posts
+        //           .Where(c => c.UserId == user.Id)
+        //         .Include(p => p.User)
+        //        .Include(l => l.Likes)
+        //        .Include(l => l.Comments)
+        //        .Include(l => l.Bookmarks)
+        //       .OrderByDescending(x => x.PostDate)
+        //       .ToList();
 
-            var result = posts.OrderBy(x => x.PostDate).Reverse().ToList();
 
-            return result;
-        }
+        //    return posts;
+        //}
+
+        //public IEnumerable<Post> GetFavoritesPosts(User user)
+        //{
+        //    var likes = _db.Likes
+        //        .Where(l => l.UserId == user.Id)
+        //        .ToList();
+
+        //    var posts = _db.Posts
+        //         .Include(p => p.Likes)
+        //         .ToList();
+
+        //    List<Post> result = new List<Post>();
+
+        //    foreach (var l in likes)
+        //    {
+        //        foreach (var post in posts)
+        //        {
+        //            if (post.Id == l.PostId)
+        //                result.Add(post);
+        //        }
+        //    }
+
+        //    return result;
+
+        //}
 
         public void Create(Post model, string userName)
         {

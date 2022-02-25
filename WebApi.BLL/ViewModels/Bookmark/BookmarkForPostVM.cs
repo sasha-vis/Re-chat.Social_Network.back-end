@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebApi.BLL.ViewModels.Like
+namespace WebApi.BLL.ViewModels.Bookmark
 {
-    public class LikeForPostVM
+    public class BookmarkForPostVM
     {
         public int PostId { get; set; }
 

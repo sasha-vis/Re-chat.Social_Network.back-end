@@ -37,6 +37,22 @@ namespace WebApi.WEB.Controllers
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet]
+        [Route("Favorites")]
+        public IEnumerable<PostGetVM> GetFavoritesPosts()
+        {
+            return _postService.GetFavoritesPosts(User.Identity.Name);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet]
+        [Route("Bookmarks")]
+        public IEnumerable<PostGetVM> GetBookmarksPosts()
+        {
+            return _postService.GetBookmarksPosts(User.Identity.Name);
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         public IActionResult Post(PostCreateVM model)
         {

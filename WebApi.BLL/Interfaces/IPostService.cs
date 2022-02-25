@@ -12,6 +12,8 @@ namespace WebApi.BLL.Interfaces
         public IEnumerable<PostGetVM> GetList();
         public PostGetVM GetItem(int id);
         public IEnumerable<PostGetVM> GetMyPosts(string userName);
+        public IEnumerable<PostGetVM> GetFavoritesPosts(string userName);
+        public IEnumerable<PostGetVM> GetBookmarksPosts(string userName);
         public void Create(PostCreateVM model, string userName);
         public void Edit(PostEditVM model);
         public void Delete(int id);

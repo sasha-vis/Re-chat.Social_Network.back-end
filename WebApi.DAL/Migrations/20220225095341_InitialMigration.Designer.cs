@@ -12,8 +12,8 @@ using WebApi.DAL;
 namespace WebApi.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220224123433_InitialDatabase")]
-    partial class InitialDatabase
+    [Migration("20220225095341_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -157,6 +157,32 @@ namespace WebApi.DAL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("WebApi.DAL.Entities.Bookmark", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("BookmarkedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Bookmarks");
+                });
+
             modelBuilder.Entity("WebApi.DAL.Entities.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -255,7 +281,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("24.02.2004");
+                        .HasDefaultValue("25.02.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -306,7 +332,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("24.02.2022 15:34");
+                        .HasDefaultValue("25.02.2022 12:53");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -387,6 +413,23 @@ namespace WebApi.DAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WebApi.DAL.Entities.Bookmark", b =>
+                {
+                    b.HasOne("WebApi.DAL.Entities.Post", "Post")
+                        .WithMany("Bookmarks")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WebApi.DAL.Entities.Comment", b =>
                 {
                     b.HasOne("WebApi.DAL.Entities.User", "Author")
@@ -434,6 +477,8 @@ namespace WebApi.DAL.Migrations
 
             modelBuilder.Entity("WebApi.DAL.Entities.Post", b =>
                 {
+                    b.Navigation("Bookmarks");
+
                     b.Navigation("Comments");
 
                     b.Navigation("Likes");

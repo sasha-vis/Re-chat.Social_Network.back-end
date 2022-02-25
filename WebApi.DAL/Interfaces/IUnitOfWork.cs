@@ -12,6 +12,7 @@ namespace WebApi.DAL.Interfaces
         public ILikeRepository<Like> Likes { get; }
 
         public ICommentRepository<Comment> Comments { get; }
+        public IBookmarkRepository<Bookmark> Bookmarks { get; }
 
         //public IOrderRepository<Order> Orders { get; }
     }

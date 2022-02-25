@@ -18,6 +18,7 @@ namespace WebApi.DAL.Repositories
 
         private IPostRepository<Post> _postRepository;
         private ILikeRepository<Like> _likeRepository;
+        private IBookmarkRepository<Bookmark> _bookmarkRepository;
         private ICommentRepository<Comment> _commentRepository;
 
         //private IOrderRepository<Order> _orderRepository;
@@ -89,6 +90,16 @@ namespace WebApi.DAL.Repositories
                 if (_commentRepository == null)
                     _commentRepository = new CommentRepository(db);
                 return _commentRepository;
+            }
+        }
+
+        public IBookmarkRepository<Bookmark> Bookmarks
+        {
+            get
+            {
+                if (_bookmarkRepository == null)
+                    _bookmarkRepository = new BookmarkRepository(db);
+                return _bookmarkRepository;
             }
         }
 

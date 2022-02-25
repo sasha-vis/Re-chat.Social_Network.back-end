@@ -41,11 +41,64 @@ namespace WebApi.BLL.Services
 
         public IEnumerable<PostGetVM> GetMyPosts(string userName)
         {
-            var posts = _unitOfWork.Posts.GetMyPosts(userName);
+            var user = _unitOfWork.Users.GetItem(userName);
+            var posts = _unitOfWork.Posts.GetList();
 
-            var result = _mapper.Map<IEnumerable<PostGetVM>>(posts);
+            var myPosts = new List<Post>();
+
+            foreach (var post in posts)
+            {
+                if (post.UserId == user.Id)
+                    myPosts.Add(post);
+            }
+
+            var result = _mapper.Map<IEnumerable<PostGetVM>>(myPosts);
 
             return result;
+        }
+
+        public IEnumerable<PostGetVM> GetFavoritesPosts(string userName)
+        {
+            var user = _unitOfWork.Users.GetItem(userName);
+            var posts = _unitOfWork.Posts.GetList();
+            var likes = _unitOfWork.Likes.LikesOfUser(user.Id);
+
+            var faivoritePosts = new List<Post>();
+
+            foreach (var l in likes)
+            {
+                foreach (var post in posts)
+                {
+                    if (post.Id == l.PostId)
+                        faivoritePosts.Add(post);
+                }
+            }
+            var result = _mapper.Map<IEnumerable<PostGetVM>>(faivoritePosts);
+
+            return result;
+
+        }
+
+        public IEnumerable<PostGetVM> GetBookmarksPosts(string userName)
+        {
+            var user = _unitOfWork.Users.GetItem(userName);
+            var posts = _unitOfWork.Posts.GetList();
+            var bookmarks = _unitOfWork.Bookmarks.BookmarksOfUser(user.Id);
+
+            var bookmarksPosts = new List<Post>();
+
+            foreach (var l in bookmarks)
+            {
+                foreach (var post in posts)
+                {
+                    if (post.Id == l.PostId)
+                        bookmarksPosts.Add(post);
+                }
+            }
+            var result = _mapper.Map<IEnumerable<PostGetVM>>(bookmarksPosts);
+
+            return result;
+
         }
 
         public void Create(PostCreateVM model, string userName)

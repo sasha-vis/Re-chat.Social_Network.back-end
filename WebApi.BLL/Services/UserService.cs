@@ -28,7 +28,10 @@ namespace WebApi.BLL.Services
 
             var result = _mapper.Map<IEnumerable<UserGetVM>>(users);
 
-            return result;
+            IEnumerable<UserGetVM> sortedResult = result.OrderBy(x => x.Name).ThenBy(x => x.Surname);
+                                      
+
+            return sortedResult;
         }
 
         public UserGetVM GetItem(string userName)
@@ -36,7 +39,8 @@ namespace WebApi.BLL.Services
             var user = _unitOfWork.Users.GetItem(userName);
 
             var result = _mapper.Map<UserGetVM>(user);
-            result.CountLikes = _unitOfWork.Likes.CountLikesOfUser(user.Id);
+            result.CountLikes = _unitOfWork.Likes.LikesOfUser(user.Id).Count;
+            result.CountBookmarks = _unitOfWork.Bookmarks.BookmarksOfUser(user.Id).Count;
 
             return result;
         }
