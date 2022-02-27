@@ -28,6 +28,12 @@ namespace WebApi.DAL.DefaultInfoForDatabase
                 .Property(u => u.Gender)
                 .HasDefaultValue("Male");
 
+            modelBuilder.Entity<FriendList>()
+            .HasOne(x => x.Friend)
+            .WithMany(x => x.FriendLists)
+            .HasForeignKey(x => x.FriendId)
+            .OnDelete(DeleteBehavior.Restrict);
+
 
 
 

@@ -10,6 +10,8 @@ namespace WebApi.DAL
     {
         public DbSet<User> Users { get; set; }
 
+        public DbSet<FriendList> Friends { get; set; }
+
         public DbSet<Post> Posts { get; set; }
 
         public DbSet<Comment> Comments { get; set; }

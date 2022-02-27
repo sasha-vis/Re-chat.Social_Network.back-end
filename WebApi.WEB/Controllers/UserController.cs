@@ -17,7 +17,7 @@ namespace WebApi.WEB.Controllers
         [HttpGet]
         public IEnumerable<UserGetVM> Get()
         {
-            var result = _userService.GetList();
+            var result = _userService.GetList(User.Identity.Name);
             return result;
         }
 

@@ -26,7 +26,7 @@ namespace WebApi.DAL.Entities
         //public List<Comment> Comments { get; set; }
         //public List<Like> Likes { get; set; }
 
-        //public List<FriendList> FriendLists { get; set; }
+        public List<FriendList> FriendLists { get; set; }
         //public List<RequestFriendList> RequestFriendLists { get; set; }
     }
 }

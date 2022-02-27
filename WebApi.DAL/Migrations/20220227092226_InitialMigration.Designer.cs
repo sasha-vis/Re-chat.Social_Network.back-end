@@ -12,7 +12,7 @@ using WebApi.DAL;
 namespace WebApi.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220225095341_InitialMigration")]
+    [Migration("20220227092226_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -213,6 +213,34 @@ namespace WebApi.DAL.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("WebApi.DAL.Entities.FriendList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("FriendId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FriendId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Friends");
+                });
+
             modelBuilder.Entity("WebApi.DAL.Entities.Like", b =>
                 {
                     b.Property<int>("Id")
@@ -281,7 +309,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("25.02.2004");
+                        .HasDefaultValue("27.02.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -332,7 +360,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("25.02.2022 12:53");
+                        .HasDefaultValue("27.02.2022 12:22");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -447,6 +475,25 @@ namespace WebApi.DAL.Migrations
                     b.Navigation("Post");
                 });
 
+            modelBuilder.Entity("WebApi.DAL.Entities.FriendList", b =>
+                {
+                    b.HasOne("WebApi.DAL.Entities.User", "Friend")
+                        .WithMany("FriendLists")
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Friend");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WebApi.DAL.Entities.Like", b =>
                 {
                     b.HasOne("WebApi.DAL.Entities.Post", "Post")
@@ -486,6 +533,8 @@ namespace WebApi.DAL.Migrations
 
             modelBuilder.Entity("WebApi.DAL.Entities.User", b =>
                 {
+                    b.Navigation("FriendLists");
+
                     b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618

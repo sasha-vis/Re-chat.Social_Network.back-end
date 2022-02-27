@@ -20,6 +20,7 @@ namespace WebApi.DAL.Repositories
         private ILikeRepository<Like> _likeRepository;
         private IBookmarkRepository<Bookmark> _bookmarkRepository;
         private ICommentRepository<Comment> _commentRepository;
+        private IFriendRepository<FriendList> _friendRepository;
 
         //private IOrderRepository<Order> _orderRepository;
 
@@ -60,6 +61,17 @@ namespace WebApi.DAL.Repositories
                 if (_userRepository == null)
                     _userRepository = new UserRepository(db, _configuration, _userManager);
                 return _userRepository;
+            }
+        }
+
+
+        public IFriendRepository<FriendList> Friends
+        {
+            get
+            {
+                if (_friendRepository == null)
+                    _friendRepository = new FriendRepository(db);
+                return _friendRepository;
             }
         }
 

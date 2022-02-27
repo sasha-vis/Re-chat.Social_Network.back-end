@@ -22,14 +22,25 @@ namespace WebApi.BLL.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<UserGetVM> GetList()
+        public IEnumerable<UserGetVM> GetList(string userName)
         {
-            var users = _unitOfWork.Users.GetList();
+            var friends = _unitOfWork.Friends.FriendsByUser(userName);
+            IEnumerable<User> usersDb =  _unitOfWork.Users.GetList();
+            var users = _mapper.Map<IEnumerable<UserGetVM>>(usersDb);
 
-            var result = _mapper.Map<IEnumerable<UserGetVM>>(users);
+            foreach (var user in users)
+            {
+                foreach (var friend in friends)
+                {
+                    if (user.Id == friend.UserId || user.Id == friend.FriendId)
+                    {
+                        user.IsFriend = true;
+                    }
+                }
+            }
 
-            IEnumerable<UserGetVM> sortedResult = result.OrderBy(x => x.Name).ThenBy(x => x.Surname);
-                                      
+            IEnumerable<UserGetVM> sortedResult = users.OrderBy(x => x.Name).ThenBy(x => x.Surname);
+
 
             return sortedResult;
         }

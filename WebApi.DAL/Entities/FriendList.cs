@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApi.DAL.Entities.Enums;
 
 namespace WebApi.DAL.Entities
 {
@@ -19,5 +20,8 @@ namespace WebApi.DAL.Entities
         public string FriendId { get; set; }
 
         public User Friend { get; set; }
+
+        public StatusFriendship Status { get; set; }
+
     }
 }

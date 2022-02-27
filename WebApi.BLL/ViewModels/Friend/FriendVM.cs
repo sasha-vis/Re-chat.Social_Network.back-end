@@ -1,9 +1,12 @@
-﻿using WebApi.BLL.ViewModels.Like;
-using WebApi.BLL.ViewModels.Post;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace WebApi.BLL.ViewModels.User
+namespace WebApi.BLL.ViewModels.Friend
 {
-    public class UserGetVM
+    public class FriendVM
     {
         public string Id { get; set; }
 
@@ -19,12 +22,5 @@ namespace WebApi.BLL.ViewModels.User
 
         public string Email { get; set; }
 
-        public bool IsFriend { get; set; }
-
-        public int CountLikes { get; set; } 
-
-        public int CountBookmarks { get; set; }
-
-        public List<PostGetVM> Posts { get; set; }
     }
 }

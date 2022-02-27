@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BLL.Interfaces;
 using WebApi.BLL.ViewModels.Post;
+using WebApi.WEB.Filters;
 
 namespace WebApi.WEB.Controllers
 {
@@ -54,12 +55,9 @@ namespace WebApi.WEB.Controllers
 
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
+        [ValidateModel]
         public IActionResult Post(PostCreateVM model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
             _postService.Create(model, User.Identity.Name);
 
             return Ok(_postService.GetMyPosts(User.Identity.Name));
