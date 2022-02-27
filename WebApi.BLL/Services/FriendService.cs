@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebApi.BLL.Interfaces;
 using WebApi.BLL.ViewModels.Friend;
 using WebApi.DAL.Entities;
+using WebApi.DAL.Entities.Enums;
 using WebApi.DAL.Interfaces;
 
 namespace WebApi.BLL.Services
@@ -39,11 +40,11 @@ namespace WebApi.BLL.Services
         }
 
 
-        public List<FriendVM> RequareFriendsByUser(string userName)
+        public List<FriendsGetRequestByUserVM> RequareFriendsByUser(string userName)
         {
             IEnumerable<FriendList> friends =  _unitOfWork.Friends.RequareFriendsByUser(userName);
 
-            return _mapper.Map<List<FriendVM>>(friends);
+            return _mapper.Map<List<FriendsGetRequestByUserVM>>(friends);
         }
 
        
@@ -53,7 +54,7 @@ namespace WebApi.BLL.Services
             var userDB = _unitOfWork.Users.GetItem(userName);
 
             var response = _mapper.Map<FriendList>(model);
-            response.UserId = userDB.Id;
+            response.FriendId = userDB.Id;
             _unitOfWork.Friends.ResponseToRequareFriendsByUser(response);
         }
 

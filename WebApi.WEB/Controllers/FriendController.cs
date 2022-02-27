@@ -7,8 +7,6 @@ using WebApi.BLL.ViewModels.Friend;
 namespace WebApi.WEB.Controllers
 {
     [Authorize(AuthenticationSchemes = "Bearer")]
-    [Route("api/[controller]")]
-    [ApiController]
     public class FriendController : BaseController
     {
         IFriendsService _friendsService;
@@ -40,11 +38,11 @@ namespace WebApi.WEB.Controllers
 
         [HttpPut]
         [Route("ResponseToRequestFriend")]
-        public IActionResult ResponseToRequestFriend(ResponseToRequareFriends model, string userName)
+        public IActionResult ResponseToRequestFriend(ResponseToRequareFriends model)
         {
             if (!ModelState.IsValid)
             {
-                return ResponseToRequestFriend(model, User.Identity.Name);
+                return ResponseToRequestFriend(model);
             }
             _friendsService.ResponseToRequareFriendsByUser(model, User.Identity.Name);
             return Ok(_friendsService.RequareFriendsByUser(User.Identity.Name));

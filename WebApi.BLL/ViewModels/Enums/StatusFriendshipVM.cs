@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebApi.BLL.ViewModels.Friend
+namespace WebApi.BLL.ViewModels.Enums
 {
-    public class CreateFriendVM
+    public enum StatusFriendshipVM
     {
-        public string FriendId { get; set;}
+        Request,
+        Accepted,
+        Decline
     }
 }

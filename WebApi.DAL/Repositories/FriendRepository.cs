@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,8 @@ namespace WebApi.DAL.Repositories
         {
             var friends = _db.Friends
                 .Where(l => (l.User.Email == userName || l.Friend.Email == userName) && l.Status == StatusFriendship.Accepted)
+                .Include(u => u.User)
+                .Include(u => u.Friend)
                 .ToList();
             return friends;
         }
@@ -40,6 +43,8 @@ namespace WebApi.DAL.Repositories
         {
             var friends = _db.Friends
                 .Where(l => l.Friend.Email == userName && l.Status == StatusFriendship.Request)
+                .Include(u => u.User)
+                .Include(u => u.Friend)
                 .ToList();
             return friends;
         }
@@ -47,8 +52,15 @@ namespace WebApi.DAL.Repositories
 
         public void ResponseToRequareFriendsByUser(FriendList friend)
         {
-            _db.Update(friend);
-            _db.SaveChanges();
+            var friendDB = _db.Friends
+                .Where(p => (p.UserId == friend.UserId && p.Status == StatusFriendship.Request))
+                .FirstOrDefault();
+            if (friendDB != null)
+            {
+                friendDB.Status = friend.Status;
+                _db.Friends.Update(friendDB);
+                _db.SaveChanges();
+            }
         }
 
         public void Create(FriendList friend)
@@ -57,6 +69,16 @@ namespace WebApi.DAL.Repositories
             _db.Add(friend);
             _db.SaveChanges();
         }
+
+        //public async Task Delete(int id)
+        //{
+        //    var friend = db.Friends.FirstOrDefault(p => p.Id == id);
+        //    if (friend != null)
+        //    {
+        //        db.Friends.Remove(friend);
+        //        await db.SaveChangesAsync();
+        //    }
+        //}
 
     }
 }
