@@ -9,8 +9,8 @@ namespace WebApi.BLL.ViewModels.Post
 {
     public class PostCreateVM
     {
-        [StringLength(10, MinimumLength = 4,
-      ErrorMessage = "Title of post must be at least 4 characters long and no more than 10.")]
+        [StringLength(50, MinimumLength = 4,
+      ErrorMessage = "Title of post must be at least 4 characters long and no more than 50.")]
         public string Title { get; set; }
 
 

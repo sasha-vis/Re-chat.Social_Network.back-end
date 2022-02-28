@@ -18,9 +18,12 @@ namespace WebApi.DAL.Entities
         public string Surname { get; set; }
 
         public string Gender { get; set; }
+
         public string BirthdayDate { get; set; }
+
         public string RegistrationDate { get; set; }
 
+        public bool ExcludeFromSearch { get; set; }
 
         public List<Post> Posts { get; set; }
         //public List<Comment> Comments { get; set; }

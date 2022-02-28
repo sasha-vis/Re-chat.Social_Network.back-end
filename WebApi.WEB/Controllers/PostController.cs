@@ -64,6 +64,19 @@ namespace WebApi.WEB.Controllers
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpPost]
+        [Route("Create")]
+        [ValidateModel]
+        public IEnumerable<PostGetVM> PostFromMain(PostCreateVM model)
+        {
+            _postService.Create(model, User.Identity.Name);
+
+            var result = _postService.GetList();
+            return result;
+        }
+
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPut]
         public IActionResult Put(PostEditVM model)
         {

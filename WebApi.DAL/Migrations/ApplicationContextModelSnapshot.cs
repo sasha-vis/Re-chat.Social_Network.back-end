@@ -307,7 +307,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("27.02.2004");
+                        .HasDefaultValue("28.02.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -318,6 +318,9 @@ namespace WebApi.DAL.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ExcludeFromSearch")
                         .HasColumnType("bit");
 
                     b.Property<string>("Gender")
@@ -358,7 +361,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("27.02.2022 12:22");
+                        .HasDefaultValue("28.02.2022 17:44");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

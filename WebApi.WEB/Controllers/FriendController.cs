@@ -29,6 +29,13 @@ namespace WebApi.WEB.Controllers
             return Ok(_friendsService.RequareFriendsByUser(User.Identity.Name));
         }
 
+        [HttpGet]
+        [Route("FriendsToAddByUser")]
+        public IActionResult GetFriendsToAddByUser()
+        {
+            return Ok(_friendsService.GetFriendsToAddByUser(User.Identity.Name));
+        }
+
         [HttpPost]
         public IActionResult Post(CreateFriendVM friend)
         {

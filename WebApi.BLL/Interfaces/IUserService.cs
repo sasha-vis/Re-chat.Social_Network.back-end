@@ -14,6 +14,8 @@ namespace WebApi.BLL.Interfaces
 
         public UserGetVM GetItem(string userName);
 
+        public void ExcludeFromSearch(string userName);
+
         public JwtSecurityToken Register(UserRegisterVM model);
 
         public JwtSecurityToken Login(UserLoginVM model);

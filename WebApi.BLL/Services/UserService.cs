@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using WebApi.BLL.Interfaces;
 using WebApi.BLL.ViewModels.User;
 using WebApi.DAL.Entities;
+using WebApi.DAL.Entities.Enums;
 using WebApi.DAL.Interfaces;
 
 namespace WebApi.BLL.Services
@@ -25,21 +26,61 @@ namespace WebApi.BLL.Services
         public IEnumerable<UserGetVM> GetList(string userName)
         {
             var friends = _unitOfWork.Friends.FriendsByUser(userName);
-            IEnumerable<User> usersDb =  _unitOfWork.Users.GetList();
+            var requireFriends = _unitOfWork.Friends.RequareFriendsByUser(userName);
+            IEnumerable<User> usersDb = _unitOfWork.Users.GetList();
             var users = _mapper.Map<IEnumerable<UserGetVM>>(usersDb);
+
+            var sortedResult = new List<UserGetVM>();
 
             foreach (var user in users)
             {
-                foreach (var friend in friends)
+                if(requireFriends != null)
                 {
-                    if (user.Id == friend.UserId || user.Id == friend.FriendId)
+                    foreach (var requireFriend in requireFriends)
                     {
-                        user.IsFriend = true;
+                        if (friends != null)
+                        {
+                            if (requireFriend.UserId != user.Id && requireFriend.FriendId != user.Id)
+                            {
+                                foreach (var friend in friends)
+                                {
+
+                                    if (friend.UserId != user.Id && friend.FriendId != user.Id)
+                                    {
+                                        sortedResult.Add(user);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (requireFriend.UserId != user.Id && requireFriend.FriendId != user.Id)
+                            {
+                                sortedResult.Add(user);
+                            }
+                        }
+                    }
+                } else
+                {
+                    if (friends != null)
+                    {
+                        foreach (var friend in friends)
+                        {
+                            if (friend.UserId != user.Id && friend.FriendId != user.Id)
+                            {
+                                sortedResult.Add(user);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        sortedResult.Add(user);
                     }
                 }
+                
             }
 
-            IEnumerable<UserGetVM> sortedResult = users.OrderBy(x => x.Name).ThenBy(x => x.Surname);
+            sortedResult.OrderBy(x => x.Name).ThenBy(x => x.Surname);
 
 
             return sortedResult;
@@ -79,6 +120,13 @@ namespace WebApi.BLL.Services
             var user = _mapper.Map<User>(model);
 
             return _unitOfWork.Users.Login(user, model.Password);
+        }
+
+
+        public void ExcludeFromSearch(string userName)
+        {
+            var user = _unitOfWork.Users.GetItem(userName);
+            _unitOfWork.Users.ExcludeFromSearch(user);
         }
     }
 }

@@ -47,7 +47,16 @@ namespace WebApi.BLL.Services
             return _mapper.Map<List<FriendsGetRequestByUserVM>>(friends);
         }
 
-       
+        public List<FriendsGetRequestByUserVM> GetFriendsToAddByUser(string userName)
+        {
+            var userDB = _unitOfWork.Users.GetItem(userName);
+            List<FriendList> friends = _unitOfWork.Friends.FriendsByUser(userName);
+            IEnumerable<FriendList> requireFriends = _unitOfWork.Friends.RequareFriendsByUser(userName);
+
+            return _mapper.Map<List<FriendsGetRequestByUserVM>>(friends);
+        }
+
+
 
         public void ResponseToRequareFriendsByUser(ResponseToRequareFriends model, string userName)
         {

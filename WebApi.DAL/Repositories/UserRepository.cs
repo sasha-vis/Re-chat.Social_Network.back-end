@@ -17,7 +17,7 @@ namespace WebApi.DAL.Repositories
     public class UserRepository : IUserRepository<User>
     {
         private readonly ApplicationContext _db;
- 
+
         private readonly IConfiguration _configuration;
         private readonly UserManager<User> _userManager;
 
@@ -25,7 +25,7 @@ namespace WebApi.DAL.Repositories
             IConfiguration configuration,
             UserManager<User> userManager)
         {
-            _db=context;
+            _db = context;
             _configuration = configuration;
             _userManager = userManager;
         }
@@ -33,8 +33,8 @@ namespace WebApi.DAL.Repositories
         public IEnumerable<User> GetList()
         {
             var users = _db.Users;
-                //.Include(u => u.Phone)
-                //.Include(p => p.City);
+            //.Include(u => u.Phone)
+            //.Include(p => p.City);
 
             return users;
         }
@@ -52,8 +52,8 @@ namespace WebApi.DAL.Repositories
 
         public JwtSecurityToken Login(User model, string password)
         {
-            var user =  _userManager.FindByNameAsync(model.Email).Result;
-            if (user != null &&  _userManager.CheckPasswordAsync(user, password).Result)
+            var user = _userManager.FindByNameAsync(model.Email).Result;
+            if (user != null && _userManager.CheckPasswordAsync(user, password).Result)
             {
                 var authClaims = new List<Claim>
                 {
@@ -94,6 +94,12 @@ namespace WebApi.DAL.Repositories
                 );
 
             return token;
+        }
+
+        public void ExcludeFromSearch(User user)
+        {
+              user.ExcludeFromSearch = !user.ExcludeFromSearch;
+             _userManager.UpdateAsync(user);
         }
     }
 }

@@ -25,6 +25,8 @@ namespace WebApi.BLL.ViewModels.User
 
         public int CountBookmarks { get; set; }
 
+        public bool ExcludeFromSearch { get; set; }
+
         public List<PostGetVM> Posts { get; set; }
     }
 }

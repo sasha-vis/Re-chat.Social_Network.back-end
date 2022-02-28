@@ -57,7 +57,7 @@ namespace WebApi.DAL.Repositories
                 .FirstOrDefault();
             if (friendDB != null)
             {
-                friendDB.Status = friend.Status;
+                friendDB.Status = StatusFriendship.Accepted;
                 _db.Friends.Update(friendDB);
                 _db.SaveChanges();
             }
@@ -65,9 +65,16 @@ namespace WebApi.DAL.Repositories
 
         public void Create(FriendList friend)
         {
-            friend.Status = StatusFriendship.Request;
-            _db.Add(friend);
-            _db.SaveChanges();
+            var friendDB = _db.Friends
+                .Where(p => (p.UserId == friend.UserId && p.FriendId == friend.FriendId) || 
+                (p.FriendId == friend.UserId && p.UserId == friend.FriendId))
+                .FirstOrDefault();
+            if (friendDB == null)
+            {
+                friend.Status = StatusFriendship.Request;
+                _db.Add(friend);
+                _db.SaveChanges();
+            }
         }
 
         //public async Task Delete(int id)
