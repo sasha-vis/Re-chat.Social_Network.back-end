@@ -13,9 +13,10 @@ namespace WebApi.BLL.Interfaces
 
         List<FriendsGetRequestByUserVM> RequareFriendsByUser(string userName);
 
-        List<FriendsGetRequestByUserVM> GetFriendsToAddByUser(string userName);
+        List<FriendsToAddGetByUserVM> GetFriendsToAddByUser(string userName);
 
         void ResponseToRequareFriendsByUser(ResponseToRequareFriends model, string userName);
+        void DeleteFriend(DeleteFriendVM model, string userName);
 
         void Create(CreateFriendVM model, string userName);
     }

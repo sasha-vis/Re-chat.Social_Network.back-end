@@ -15,7 +15,11 @@ namespace WebApi.DAL.Interfaces
 
         List<T> RequareFriendsByUser(string userName);
 
+        List<T> GetAllFriendsByUser(string userName);
+
         void ResponseToRequareFriendsByUser(T friend);
+
+        void DeleteFriend(T friend);
 
         public void Create(T friend);
 

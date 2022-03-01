@@ -47,13 +47,60 @@ namespace WebApi.BLL.Services
             return _mapper.Map<List<FriendsGetRequestByUserVM>>(friends);
         }
 
-        public List<FriendsGetRequestByUserVM> GetFriendsToAddByUser(string userName)
+        public List<FriendsToAddGetByUserVM> GetFriendsToAddByUser(string userName)
         {
-            var userDB = _unitOfWork.Users.GetItem(userName);
-            List<FriendList> friends = _unitOfWork.Friends.FriendsByUser(userName);
-            IEnumerable<FriendList> requireFriends = _unitOfWork.Friends.RequareFriendsByUser(userName);
+            var users = _unitOfWork.Users.GetList();
 
-            return _mapper.Map<List<FriendsGetRequestByUserVM>>(friends);
+            var mappedUsers = _mapper.Map<List<FriendsToAddGetByUserVM>>(users);
+
+            var friendsByUser = _unitOfWork.Friends.GetAllFriendsByUser(userName);
+
+            //mappedUsers.OrderBy(x => x.Name).ThenBy(x => x.Surname);
+
+            var result = new List<FriendsToAddGetByUserVM>();
+
+            foreach (var user in mappedUsers)
+            {
+                if(user.Email != userName)
+                {
+                    if(friendsByUser.Count != 0)
+                    {
+                        foreach(var friend in friendsByUser)
+                        {
+                            if (friend.FriendId == user.UserId && friend.Status == StatusFriendship.Request)
+                            {
+                                user.isFriend = 1;
+                                result.Add(user);
+                                break;
+                            } 
+                            else if (friend.UserId == user.UserId && friend.Status == StatusFriendship.Request) 
+                            {
+                                user.isFriend = 2;
+                                result.Add(user);
+                                break;
+                            } 
+                            else if (friend.FriendId == user.UserId && friend.Status == StatusFriendship.Accepted)
+                            {
+                                user.isFriend = 3;
+                                break;
+                            }
+                            else if (friend.UserId == user.UserId && friend.Status == StatusFriendship.Accepted)
+                            {
+                                user.isFriend = 3;
+                                break;
+                            }
+                        }
+                        if (!result.Contains(user) && user.isFriend != 3) { result.Add(user); }
+                    } else
+                    {
+                        user.isFriend = 0;
+                        result.Add(user);
+                    }
+                }
+            }
+            
+
+            return result;
         }
 
 
@@ -65,6 +112,15 @@ namespace WebApi.BLL.Services
             var response = _mapper.Map<FriendList>(model);
             response.FriendId = userDB.Id;
             _unitOfWork.Friends.ResponseToRequareFriendsByUser(response);
+        }
+
+        public void DeleteFriend(DeleteFriendVM model, string userName)
+        {
+            var userDB = _unitOfWork.Users.GetItem(userName);
+
+            var response = _mapper.Map<FriendList>(model);
+            response.UserId = userDB.Id;
+            _unitOfWork.Friends.DeleteFriend(response);
         }
 
         public void Create(CreateFriendVM model, string userName)

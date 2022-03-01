@@ -49,6 +49,17 @@ namespace WebApi.DAL.Repositories
             return friends;
         }
 
+        public List<FriendList> GetAllFriendsByUser(string userName)
+        {
+            var friends = _db.Friends
+                .Where(l => l.User.Email == userName || l.Friend.Email == userName)
+                .Include(u => u.User)
+                .Include(u => u.Friend)
+                .ToList();
+
+            return friends;
+        }
+
 
         public void ResponseToRequareFriendsByUser(FriendList friend)
         {
@@ -59,6 +70,18 @@ namespace WebApi.DAL.Repositories
             {
                 friendDB.Status = StatusFriendship.Accepted;
                 _db.Friends.Update(friendDB);
+                _db.SaveChanges();
+            }
+        }
+
+        public void DeleteFriend(FriendList friend)
+        {
+            var friendDB = _db.Friends
+                .Where(p => (p.UserId == friend.UserId && p.FriendId == friend.FriendId) || (p.FriendId == friend.UserId && p.UserId == friend.FriendId))
+                .FirstOrDefault();
+            if (friendDB != null)
+            {
+                _db.Friends.Remove(friendDB);
                 _db.SaveChanges();
             }
         }

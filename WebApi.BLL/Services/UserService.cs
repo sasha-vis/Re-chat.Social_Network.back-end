@@ -25,65 +25,13 @@ namespace WebApi.BLL.Services
 
         public IEnumerable<UserGetVM> GetList(string userName)
         {
-            var friends = _unitOfWork.Friends.FriendsByUser(userName);
-            var requireFriends = _unitOfWork.Friends.RequareFriendsByUser(userName);
             IEnumerable<User> usersDb = _unitOfWork.Users.GetList();
             var users = _mapper.Map<IEnumerable<UserGetVM>>(usersDb);
 
-            var sortedResult = new List<UserGetVM>();
-
-            foreach (var user in users)
-            {
-                if(requireFriends != null)
-                {
-                    foreach (var requireFriend in requireFriends)
-                    {
-                        if (friends != null)
-                        {
-                            if (requireFriend.UserId != user.Id && requireFriend.FriendId != user.Id)
-                            {
-                                foreach (var friend in friends)
-                                {
-
-                                    if (friend.UserId != user.Id && friend.FriendId != user.Id)
-                                    {
-                                        sortedResult.Add(user);
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (requireFriend.UserId != user.Id && requireFriend.FriendId != user.Id)
-                            {
-                                sortedResult.Add(user);
-                            }
-                        }
-                    }
-                } else
-                {
-                    if (friends != null)
-                    {
-                        foreach (var friend in friends)
-                        {
-                            if (friend.UserId != user.Id && friend.FriendId != user.Id)
-                            {
-                                sortedResult.Add(user);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        sortedResult.Add(user);
-                    }
-                }
-                
-            }
-
-            sortedResult.OrderBy(x => x.Name).ThenBy(x => x.Surname);
+            users.OrderBy(x => x.Name).ThenBy(x => x.Surname);
 
 
-            return sortedResult;
+            return users;
         }
 
         public UserGetVM GetItem(string userName)

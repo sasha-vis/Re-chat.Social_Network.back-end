@@ -55,5 +55,16 @@ namespace WebApi.WEB.Controllers
             return Ok(_friendsService.RequareFriendsByUser(User.Identity.Name));
         }
 
+        [HttpDelete]
+        public IActionResult Delete(DeleteFriendVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Delete(model);
+            }
+            _friendsService.DeleteFriend(model, User.Identity.Name);
+            return Ok(_friendsService.FriendsByUser(User.Identity.Name));
+        }
+
     }
 }

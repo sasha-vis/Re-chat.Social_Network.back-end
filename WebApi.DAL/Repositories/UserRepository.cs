@@ -32,7 +32,8 @@ namespace WebApi.DAL.Repositories
 
         public IEnumerable<User> GetList()
         {
-            var users = _db.Users;
+            var users = _db.Users
+                .Include(u => u.FriendLists);
             //.Include(u => u.Phone)
             //.Include(p => p.City);
 
