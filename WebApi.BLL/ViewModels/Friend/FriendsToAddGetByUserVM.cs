@@ -20,5 +20,6 @@ namespace WebApi.BLL.ViewModels.Friend
 
         public string BirthdayDate { get; set; }
         public int isFriend { get; set; }
+        public bool ExcludeFromSearch { get; set; }
     }
 }

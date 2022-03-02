@@ -16,6 +16,7 @@ namespace WebApi.BLL.AutoMapper
             CreateMap<CreateFriendVM, FriendList>();
 
             CreateMap<FriendList, FriendVM>()
+                 .ForMember(c => c.FriendId, opt => opt.MapFrom(c => c.FriendId))
                  .ForMember(c => c.Email, opt => opt.MapFrom(c => c.Friend.Email))
                  .ForMember(c => c.Name, opt => opt.MapFrom(c => c.Friend.Name))
                  .ForMember(c => c.Surname, opt => opt.MapFrom(c => c.Friend.Surname))
@@ -35,7 +36,8 @@ namespace WebApi.BLL.AutoMapper
                  .ForMember(c => c.Name, opt => opt.MapFrom(c => c.Name))
                  .ForMember(c => c.Surname, opt => opt.MapFrom(c => c.Surname))
                  .ForMember(c => c.BirthdayDate, opt => opt.MapFrom(c => c.BirthdayDate))
-                 .ForMember(c => c.Gender, opt => opt.MapFrom(c => c.Gender));
+                 .ForMember(c => c.Gender, opt => opt.MapFrom(c => c.Gender))
+                 .ForMember(c => c.ExcludeFromSearch, opt => opt.MapFrom(c => c.ExcludeFromSearch));
 
 
             CreateMap<ResponseToRequareFriends, FriendList>();

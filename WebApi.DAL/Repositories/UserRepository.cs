@@ -99,8 +99,14 @@ namespace WebApi.DAL.Repositories
 
         public void ExcludeFromSearch(User user)
         {
-              user.ExcludeFromSearch = !user.ExcludeFromSearch;
-             _userManager.UpdateAsync(user);
+            if (user.ExcludeFromSearch == true)
+            {
+                user.ExcludeFromSearch = false;
+            } else
+            {
+                user.ExcludeFromSearch = true;
+            }
+            _db.SaveChanges();
         }
     }
 }

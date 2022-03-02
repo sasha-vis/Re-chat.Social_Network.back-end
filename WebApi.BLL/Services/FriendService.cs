@@ -33,10 +33,15 @@ namespace WebApi.BLL.Services
                 if (friend.FriendId == user.Id)
                 {
                     friend.Friend = friend.User;
+                    friend.FriendId = friend.UserId; 
                 }
             }
 
-            return _mapper.Map<List<FriendVM>>(friends);
+            var result = _mapper.Map<List<FriendVM>>(friends);
+
+            result.OrderBy(x => x.Name).ThenBy(x => x.Surname);
+
+            return result;
         }
 
 
@@ -44,7 +49,11 @@ namespace WebApi.BLL.Services
         {
             IEnumerable<FriendList> friends =  _unitOfWork.Friends.RequareFriendsByUser(userName);
 
-            return _mapper.Map<List<FriendsGetRequestByUserVM>>(friends);
+            var result = _mapper.Map<List<FriendsGetRequestByUserVM>>(friends);
+
+            result.OrderBy(x => x.Name).ThenBy(x => x.Surname);
+
+            return result;
         }
 
         public List<FriendsToAddGetByUserVM> GetFriendsToAddByUser(string userName)
@@ -54,8 +63,6 @@ namespace WebApi.BLL.Services
             var mappedUsers = _mapper.Map<List<FriendsToAddGetByUserVM>>(users);
 
             var friendsByUser = _unitOfWork.Friends.GetAllFriendsByUser(userName);
-
-            //mappedUsers.OrderBy(x => x.Name).ThenBy(x => x.Surname);
 
             var result = new List<FriendsToAddGetByUserVM>();
 
@@ -90,15 +97,19 @@ namespace WebApi.BLL.Services
                                 break;
                             }
                         }
-                        if (!result.Contains(user) && user.isFriend != 3) { result.Add(user); }
+                        if ((!result.Contains(user) && user.isFriend != 3) && user.ExcludeFromSearch == false) { result.Add(user); }
                     } else
                     {
-                        user.isFriend = 0;
-                        result.Add(user);
+                        if(user.ExcludeFromSearch == false)
+                        {
+                            user.isFriend = 0;
+                            result.Add(user);
+                        }
                     }
                 }
             }
             
+            result.OrderBy(x => x.Name).ThenBy(x => x.Surname);
 
             return result;
         }

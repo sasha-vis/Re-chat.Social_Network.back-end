@@ -35,13 +35,12 @@ namespace WebApi.WEB.Controllers
             return _userService.GetItem(User.Identity.Name);
         }
 
-        [Authorize]
         [HttpPut]
-        [Route("excludeFromSearch")]
-        public async Task<IActionResult> ExcludeFromSearch()
+        [Route("ExcludeFromSearch")]
+        public IActionResult ExcludeFromSearch()
         {
            _userService.ExcludeFromSearch(User.Identity.Name);
-            return Ok(_userService.GetItem(User.Identity.Name));
+            return Ok();
         }
     }
 }

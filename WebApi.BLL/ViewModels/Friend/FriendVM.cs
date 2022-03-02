@@ -10,6 +10,8 @@ namespace WebApi.BLL.ViewModels.Friend
     {
         public string Id { get; set; }
 
+        public string FriendId { get; set; }
+
         public string Name { get; set; }
 
         public string Surname { get; set; }

@@ -41,6 +41,7 @@ namespace WebApi.BLL.Services
             var result = _mapper.Map<UserGetVM>(user);
             result.CountLikes = _unitOfWork.Likes.LikesOfUser(user.Id).Count;
             result.CountBookmarks = _unitOfWork.Bookmarks.BookmarksOfUser(user.Id).Count;
+            result.CountFriends = _unitOfWork.Friends.FriendsByUser(userName).Count;
 
             return result;
         }
