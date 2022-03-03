@@ -108,5 +108,11 @@ namespace WebApi.DAL.Repositories
             }
             _db.SaveChanges();
         }
+
+        public void ChangeGeneral(User user)
+        {
+            _db.Users.Update(user);
+            _db.SaveChanges();
+        }
     }
 }

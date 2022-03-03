@@ -109,7 +109,11 @@ namespace WebApi.BLL.Services
 
         public void Edit(PostEditVM model)
         {
-            var post = _mapper.Map<Post>(model);
+            var post = _unitOfWork.Posts.GetItem(model.Id);
+
+            post.Title = model.Title;
+            post.Content = model.Content;
+
             _unitOfWork.Posts.Edit(post);
         }
 

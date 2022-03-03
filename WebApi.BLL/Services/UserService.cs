@@ -77,5 +77,17 @@ namespace WebApi.BLL.Services
             var user = _unitOfWork.Users.GetItem(userName);
             _unitOfWork.Users.ExcludeFromSearch(user);
         }
+
+        public void ChangeGeneral(ChangeGeneralInfoUserVM model, string userName)
+        {
+            var user = _unitOfWork.Users.GetItem(userName);
+
+            user.Name = model.Name;
+            user.Surname = model.Surname;
+            user.Gender = model.Gender;
+            user.BirthdayDate = model.BirthdayDate;
+
+            _unitOfWork.Users.ChangeGeneral(user);
+        }
     }
 }

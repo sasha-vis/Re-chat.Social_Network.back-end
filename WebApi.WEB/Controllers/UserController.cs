@@ -42,5 +42,13 @@ namespace WebApi.WEB.Controllers
            _userService.ExcludeFromSearch(User.Identity.Name);
             return Ok();
         }
+
+        [HttpPut]
+        [Route("ChangeGeneral")]
+        public IActionResult ChangeGeneral(ChangeGeneralInfoUserVM model)
+        {
+            _userService.ChangeGeneral(model, User.Identity.Name);
+            return Ok();
+        }
     }
 }

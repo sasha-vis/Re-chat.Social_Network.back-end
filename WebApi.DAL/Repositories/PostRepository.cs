@@ -99,20 +99,10 @@ namespace WebApi.DAL.Repositories
             _db.SaveChanges();
         }
 
-        public void Edit(Post model)
+        public void Edit(Post post)
         {
-            var post = _db.Posts
-                  .Where(post => post.Id == model.Id)
-                  .FirstOrDefault();
-
-            if (post != null)
-            {
-                post.Title = model.Title;
-                post.Content = model.Content;
-                _db.Posts.Update(post);
-                _db.SaveChanges();
-            }
-
+            _db.Posts.Update(post);
+            _db.SaveChanges();
         }
 
         public void Delete(int id)

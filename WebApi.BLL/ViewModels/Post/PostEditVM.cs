@@ -9,14 +9,15 @@ namespace WebApi.BLL.ViewModels.Post
 {
     public class PostEditVM
     {
-        [Required]
         public int Id { get; set; }
-        [Required]
-        public string Title { get; set; }
-        [Required]
-        public string Content { get; set; }
 
-        [Required]
-        public string UserId { get; set; }
+        [StringLength(50, MinimumLength = 4,
+      ErrorMessage = "Title of post must be at least 4 characters long and no more than 50.")]
+        public string Title { get; set; }
+
+
+        [StringLength(3000, MinimumLength = 4,
+          ErrorMessage = "Name must be at least 4 characters long and no more than 3000.")]
+        public string Content { get; set; }
     }
 }

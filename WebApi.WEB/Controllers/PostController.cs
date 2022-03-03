@@ -84,6 +84,7 @@ namespace WebApi.WEB.Controllers
             {
                 return BadRequest();
             }
+
             _postService.Edit(model);
             return Ok(_postService.GetList());
         }

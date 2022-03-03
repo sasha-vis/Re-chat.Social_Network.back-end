@@ -16,6 +16,8 @@ namespace WebApi.BLL.Interfaces
 
         public void ExcludeFromSearch(string userName);
 
+        public void ChangeGeneral(ChangeGeneralInfoUserVM model, string userName);
+
         public JwtSecurityToken Register(UserRegisterVM model);
 
         public JwtSecurityToken Login(UserLoginVM model);
