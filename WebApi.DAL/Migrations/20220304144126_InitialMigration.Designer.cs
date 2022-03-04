@@ -12,7 +12,7 @@ using WebApi.DAL;
 namespace WebApi.DAL.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220228144421_InitialMigration")]
+    [Migration("20220304144126_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -267,6 +267,36 @@ namespace WebApi.DAL.Migrations
                     b.ToTable("Likes");
                 });
 
+            modelBuilder.Entity("WebApi.DAL.Entities.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("FriendListId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("MessageDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("MessageText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("FriendListId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("WebApi.DAL.Entities.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -309,7 +339,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("28.02.2004");
+                        .HasDefaultValue("04.03.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -363,7 +393,7 @@ namespace WebApi.DAL.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("28.02.2022 17:44");
+                        .HasDefaultValue("04.03.2022 17:41");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -514,6 +544,23 @@ namespace WebApi.DAL.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("WebApi.DAL.Entities.Message", b =>
+                {
+                    b.HasOne("WebApi.DAL.Entities.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("WebApi.DAL.Entities.FriendList", "FriendList")
+                        .WithMany("Messages")
+                        .HasForeignKey("FriendListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("FriendList");
+                });
+
             modelBuilder.Entity("WebApi.DAL.Entities.Post", b =>
                 {
                     b.HasOne("WebApi.DAL.Entities.User", "User")
@@ -523,6 +570,11 @@ namespace WebApi.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebApi.DAL.Entities.FriendList", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("WebApi.DAL.Entities.Post", b =>

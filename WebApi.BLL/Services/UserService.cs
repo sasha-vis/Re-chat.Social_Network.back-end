@@ -89,5 +89,13 @@ namespace WebApi.BLL.Services
 
             _unitOfWork.Users.ChangeGeneral(user);
         }
+
+        public void ChangePassword(UserChangePasswordVM model, string userName)
+        {
+
+            var userDb =  _unitOfWork.Users.GetItem(userName);
+            userDb.SecurityStamp = Guid.NewGuid().ToString();
+            _unitOfWork.Users.ChangePassword(userDb, model.OldPassword, model.NewPassword);
+        }
     }
 }

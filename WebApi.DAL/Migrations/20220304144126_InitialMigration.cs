@@ -31,8 +31,8 @@ namespace WebApi.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Male"),
-                    BirthdayDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "28.02.2004"),
-                    RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "28.02.2022 17:44"),
+                    BirthdayDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "04.03.2004"),
+                    RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "04.03.2022 17:41"),
                     ExcludeFromSearch = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -210,6 +210,33 @@ namespace WebApi.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MessageText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FriendListId = table.Column<int>(type: "int", nullable: false),
+                    MessageDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Messages_Friends_FriendListId",
+                        column: x => x.FriendListId,
+                        principalTable: "Friends",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Bookmarks",
                 columns: table => new
                 {
@@ -368,6 +395,16 @@ namespace WebApi.DAL.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_AuthorId",
+                table: "Messages",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Messages_FriendListId",
+                table: "Messages",
+                column: "FriendListId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Posts_UserId",
                 table: "Posts",
                 column: "UserId");
@@ -397,16 +434,19 @@ namespace WebApi.DAL.Migrations
                 name: "Comments");
 
             migrationBuilder.DropTable(
-                name: "Friends");
+                name: "Likes");
 
             migrationBuilder.DropTable(
-                name: "Likes");
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Posts");
+
+            migrationBuilder.DropTable(
+                name: "Friends");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -21,6 +21,7 @@ namespace WebApi.DAL.Repositories
         private IBookmarkRepository<Bookmark> _bookmarkRepository;
         private ICommentRepository<Comment> _commentRepository;
         private IFriendRepository<FriendList> _friendRepository;
+        private IMessageRepository<Message> _messageRepository;
 
         //private IOrderRepository<Order> _orderRepository;
 
@@ -112,6 +113,16 @@ namespace WebApi.DAL.Repositories
                 if (_bookmarkRepository == null)
                     _bookmarkRepository = new BookmarkRepository(db);
                 return _bookmarkRepository;
+            }
+        }
+
+        public IMessageRepository<Message> Messages
+        {
+            get
+            {
+                if (_messageRepository == null)
+                    _messageRepository = new MessageRepository(db);
+                return _messageRepository;
             }
         }
 

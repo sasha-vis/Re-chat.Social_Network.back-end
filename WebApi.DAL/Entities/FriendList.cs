@@ -21,6 +21,7 @@ namespace WebApi.DAL.Entities
 
         public User Friend { get; set; }
 
+        public List<Message> Messages { get; set; }
         public StatusFriendship Status { get; set; }
 
     }

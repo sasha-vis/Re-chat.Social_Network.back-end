@@ -114,5 +114,13 @@ namespace WebApi.DAL.Repositories
             _db.Users.Update(user);
             _db.SaveChanges();
         }
+
+        public void ChangePassword(User user, string currentPassword, string newPassword)
+        {
+            _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+            _db.SaveChanges();
+        }
+
+
     }
 }

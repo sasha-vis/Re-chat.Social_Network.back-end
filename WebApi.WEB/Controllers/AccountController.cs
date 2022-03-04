@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using WebApi.BLL.Interfaces;
@@ -46,5 +47,15 @@ namespace WebApi.WEB.Controllers
             }
             return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists! or User Create Failed" });
         }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpPut]
+        [Route("ChangePassword")]
+        public IActionResult Put(UserChangePasswordVM user)
+        {
+             _userService.ChangePassword(user, User.Identity.Name);
+            return Ok();
+        }
+
     }
 }

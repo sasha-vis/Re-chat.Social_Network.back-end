@@ -15,6 +15,7 @@ namespace WebApi.DAL.Interfaces
 
         public ICommentRepository<Comment> Comments { get; }
         public IBookmarkRepository<Bookmark> Bookmarks { get; }
+        public IMessageRepository<Message> Messages { get; }
 
         //public IOrderRepository<Order> Orders { get; }
     }

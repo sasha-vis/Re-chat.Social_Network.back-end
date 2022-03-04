@@ -21,5 +21,7 @@ namespace WebApi.BLL.Interfaces
         public JwtSecurityToken Register(UserRegisterVM model);
 
         public JwtSecurityToken Login(UserLoginVM model);
+
+        public void ChangePassword(UserChangePasswordVM model, string userName);
     }
 }

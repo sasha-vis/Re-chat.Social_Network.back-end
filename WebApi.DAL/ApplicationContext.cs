@@ -18,6 +18,7 @@ namespace WebApi.DAL
 
         public DbSet<Like> Likes { get; set; }
         public DbSet<Bookmark> Bookmarks { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         //public DbSet<FriendList> FriendLists { get; set; }
         //public DbSet<RequestFriendList> RequestFriendLists { get; set; }

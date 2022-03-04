@@ -33,6 +33,7 @@ namespace WebApi.DAL.Repositories
             var friends = _db.Friends
                 .Where(l => (l.User.Email == userName || l.Friend.Email == userName) && l.Status == StatusFriendship.Accepted)
                 .Include(u => u.User)
+                .Include(l => l.Messages)
                 .Include(u => u.Friend)
                 .ToList();
             return friends;

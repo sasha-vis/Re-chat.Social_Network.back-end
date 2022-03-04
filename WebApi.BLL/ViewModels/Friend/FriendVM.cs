@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApi.BLL.ViewModels.Message;
 
 namespace WebApi.BLL.ViewModels.Friend
 {
@@ -23,6 +24,8 @@ namespace WebApi.BLL.ViewModels.Friend
         public string RegistrationDate { get; set; }
 
         public string Email { get; set; }
+
+        public List<MessageForFriendVM> Messages { get; set; }
 
     }
 }
