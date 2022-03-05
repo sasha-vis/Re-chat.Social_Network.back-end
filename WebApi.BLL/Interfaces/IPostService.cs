@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApi.BLL.ViewModels.Post;
+﻿using WebApi.BLL.DTO.Post;
 
 namespace WebApi.BLL.Interfaces
 {
     public interface IPostService
     {
-        public IEnumerable<PostGetVM> GetList();
-        public PostGetVM GetItem(int id);
-        public IEnumerable<PostGetVM> GetMyPosts(string userName);
-        public IEnumerable<PostGetVM> GetFavoritesPosts(string userName);
-        public IEnumerable<PostGetVM> GetBookmarksPosts(string userName);
-        public void Create(PostCreateVM model, string userName);
-        public void Edit(PostEditVM model);
-        public void Delete(int id);
+        public IEnumerable<PostGetDTO> GetList();
+        public PostGetDTO GetItem(int id);
+        public IEnumerable<PostGetDTO> GetMyPosts(string userName);
+        public IEnumerable<PostGetDTO> GetFavoritesPosts(string userName);
+        public IEnumerable<PostGetDTO> GetBookmarksPosts(string userName);
+        public void Create(PostCreateDTO model, string userName);
+        public void Edit(PostEditDTO model, string userName);
+        public void Delete(int id, string userName);
     }
 }

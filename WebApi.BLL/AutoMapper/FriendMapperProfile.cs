@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApi.BLL.ViewModels.Friend;
+using WebApi.BLL.DTO.Friend;
 using WebApi.DAL.Entities;
 
 namespace WebApi.BLL.AutoMapper
@@ -13,9 +8,9 @@ namespace WebApi.BLL.AutoMapper
     {
         public FriendMapperProfile()
         {
-            CreateMap<CreateFriendVM, FriendList>();
+            CreateMap<CreateFriendDTO, FriendList>();
 
-            CreateMap<FriendList, FriendVM>()
+            CreateMap<FriendList, FriendDTO>()
                  .ForMember(c => c.FriendId, opt => opt.MapFrom(c => c.FriendId))
                  .ForMember(c => c.Email, opt => opt.MapFrom(c => c.Friend.Email))
                  .ForMember(c => c.Name, opt => opt.MapFrom(c => c.Friend.Name))
@@ -23,14 +18,14 @@ namespace WebApi.BLL.AutoMapper
                  .ForMember(c => c.BirthdayDate, opt => opt.MapFrom(c => c.Friend.BirthdayDate))
                  .ForMember(c => c.Gender, opt => opt.MapFrom(c => c.Friend.Gender));
 
-            CreateMap<FriendList, FriendsGetRequestByUserVM>()
+            CreateMap<FriendList, FriendsGetRequestByUserDTO>()
                  .ForMember(c => c.Email, opt => opt.MapFrom(c => c.User.Email))
                  .ForMember(c => c.Name, opt => opt.MapFrom(c => c.User.Name))
                  .ForMember(c => c.Surname, opt => opt.MapFrom(c => c.User.Surname))
                  .ForMember(c => c.BirthdayDate, opt => opt.MapFrom(c => c.User.BirthdayDate))
                  .ForMember(c => c.Gender, opt => opt.MapFrom(c => c.User.Gender));
 
-            CreateMap<User, FriendsToAddGetByUserVM>()
+            CreateMap<User, FriendsToAddGetByUserDTO>()
                  .ForMember(c => c.UserId, opt => opt.MapFrom(c => c.Id))
                  .ForMember(c => c.Email, opt => opt.MapFrom(c => c.Email))
                  .ForMember(c => c.Name, opt => opt.MapFrom(c => c.Name))
@@ -40,11 +35,11 @@ namespace WebApi.BLL.AutoMapper
                  .ForMember(c => c.ExcludeFromSearch, opt => opt.MapFrom(c => c.ExcludeFromSearch));
 
 
-            CreateMap<ResponseToRequareFriends, FriendList>();
+            CreateMap<ResponseToRequareFriendsDTO, FriendList>();
 
-            CreateMap<FriendList, FriendsForUserVM>();
+            CreateMap<FriendList, FriendsForUserDTO>();
 
-            CreateMap<DeleteFriendVM, FriendList>();
+            CreateMap<DeleteFriendDTO, FriendList>();
 
         }
     }

@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApi.BLL.ViewModels.Comment;
+using WebApi.BLL.DTO.Comment;
 using WebApi.DAL.Entities;
 
 namespace WebApi.BLL.AutoMapper
@@ -13,10 +8,9 @@ namespace WebApi.BLL.AutoMapper
     {
         public CommentMapperProfile()
         {
+            CreateMap<CommentCreateDTO, Comment>();
 
-            CreateMap<CommentCreateVM, Comment>();
-
-            CreateMap<Comment, CommentForPostVM>()
+            CreateMap<Comment, CommentForPostDTO>()
                 .ForMember(c => c.UserName, opt => opt.MapFrom(c => c.Author.Name))
                 .ForMember(c => c.UserSurname, opt => opt.MapFrom(c => c.Author.Surname));
         }

@@ -12,16 +12,15 @@ namespace WebApi.BLL
             services.RegisterDalDependencies();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            //services.AddTransient<ICategoryService, CategoryService>();
-            //services.AddTransient<IProductService, ProductService>();
+
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<ILikeService, LikeService>();
             services.AddTransient<ICommentService, CommentService>();
             services.AddTransient<IBookmarkService, BookmarkService>();
             services.AddTransient<IFriendsService, FriendService>();
             services.AddTransient<IMessageService, MessageService>();
-            //services.AddTransient<IOrderService, OrderService>();
         }
     }
 }

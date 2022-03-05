@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Comment;
+using WebApi.BLL.DTO.Comment;
+using WebApi.WEB.Filters;
 
 namespace WebApi.WEB.Controllers
 {
@@ -16,25 +16,11 @@ namespace WebApi.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(CommentCreateVM comment)
+        [ValidateModel]
+        public IActionResult Post(CommentCreateDTO comment)
         {
-            if (!ModelState.IsValid)
-            {
-                return Post(comment);
-            }
             _commentService.Create(comment, User.Identity.Name);
             return Ok();
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int? id)
-        {
-            if (id != null)
-            {
-                 _commentService.Delete(id.Value, User.Identity.Name);
-                return Ok();
-            }
-            return NotFound();
         }
     }
 }

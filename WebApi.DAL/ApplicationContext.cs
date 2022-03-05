@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using WebApi.DAL.DefaultInfoForDatabase;
+using WebApi.DAL.ConfigureDatabase;
 using WebApi.DAL.Entities;
 
 namespace WebApi.DAL
@@ -9,19 +9,12 @@ namespace WebApi.DAL
     public class ApplicationContext : IdentityDbContext<User>
     {
         public DbSet<User> Users { get; set; }
-
         public DbSet<FriendList> Friends { get; set; }
-
         public DbSet<Post> Posts { get; set; }
-
         public DbSet<Comment> Comments { get; set; }
-
         public DbSet<Like> Likes { get; set; }
         public DbSet<Bookmark> Bookmarks { get; set; }
         public DbSet<Message> Messages { get; set; }
-
-        //public DbSet<FriendList> FriendLists { get; set; }
-        //public DbSet<RequestFriendList> RequestFriendLists { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,7 +30,7 @@ namespace WebApi.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.AddDefaultInfo();
+            modelBuilder.AddConfigureDatabase();
 
             base.OnModelCreating(modelBuilder);
         }

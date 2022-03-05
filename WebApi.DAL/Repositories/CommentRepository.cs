@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApi.DAL.Entities;
+﻿using WebApi.DAL.Entities;
 using WebApi.DAL.Interfaces;
 
 namespace WebApi.DAL.Repositories
@@ -17,36 +11,17 @@ namespace WebApi.DAL.Repositories
         {
             _db = context;
         }
-
-
-        public Comment GetItem(int id)
-        {
-            var comment = _db.Comments
-                .Where(p => p.Id == id)
-                .Include(a => a.Author)
-                .FirstOrDefault();
-
-            return comment;
-        }
-
-
         public void Create(Comment comment)
         {
-            //DateTime date = DateTime.Now;
-            //string dateString = date.ToString("g");
+            var postDB = _db.Posts
+                .Where(p => p.Id == comment.PostId)
+                .FirstOrDefault();
 
-            comment.CommentDate = DateTime.Now;
-            _db.Comments.Add(comment);
-            _db.SaveChangesAsync();
-        }
-
-        public void Delete(int id)
-        {
-            var comment = _db.Comments.FirstOrDefault(p => p.Id == id);
-            if (comment != null)
+            if (postDB != null)
             {
-                _db.Comments.Remove(comment);
-                _db.SaveChangesAsync();
+                comment.CommentDate = DateTime.Now;
+                _db.Comments.Add(comment);
+                _db.SaveChanges();
             }
         }
     }

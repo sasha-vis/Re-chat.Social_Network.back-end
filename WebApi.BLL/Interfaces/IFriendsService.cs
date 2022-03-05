@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApi.BLL.ViewModels.Friend;
+﻿using WebApi.BLL.DTO.Friend;
 
 namespace WebApi.BLL.Interfaces
 {
     public interface IFriendsService
     {
-        List<FriendVM> FriendsByUser(string userName);
-
-        List<FriendsGetRequestByUserVM> RequareFriendsByUser(string userName);
-
-        List<FriendsToAddGetByUserVM> GetFriendsToAddByUser(string userName);
-
-        void ResponseToRequareFriendsByUser(ResponseToRequareFriends model, string userName);
-        void DeleteFriend(DeleteFriendVM model, string userName);
-
-        void Create(CreateFriendVM model, string userName);
+        List<FriendDTO> FriendsByUser(string userName);
+        List<FriendsGetRequestByUserDTO> RequareFriendsByUser(string userName);
+        List<FriendsToAddGetByUserDTO> GetFriendsToAddByUser(string userName);
+        void ResponseToRequareFriendsByUser(ResponseToRequareFriendsDTO model, string userName);
+        void DeleteFriend(DeleteFriendDTO model, string userName);
+        void Create(CreateFriendDTO model, string userName);
     }
 }

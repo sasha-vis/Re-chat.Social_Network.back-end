@@ -1,10 +1,5 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApi.BLL.ViewModels.Post;
+using WebApi.BLL.DTO.Post;
 using WebApi.DAL.Entities;
 
 namespace WebApi.BLL.AutoMapper
@@ -13,18 +8,13 @@ namespace WebApi.BLL.AutoMapper
     {
         public PostMapperProfile()
         {
-            CreateMap<Post, PostGetVM>()
+            CreateMap<Post, PostGetDTO>()
                 .ForMember(c => c.UserName, opt => opt.MapFrom(c => c.User.Name))
                 .ForMember(c => c.UserSurname, opt => opt.MapFrom(c => c.User.Surname));
 
-            CreateMap<PostCreateVM, Post>();
+            CreateMap<PostCreateDTO, Post>();
 
-            CreateMap<PostEditVM, Post>();
-
-            //CreateMap<UserPostVM, User>()
-            //    .ForMember(c => c.UserName, opt => opt.MapFrom(c => c.Email));
-
-            //CreateMap<UserEditVM, User>();
+            CreateMap<PostEditDTO, Post>();
         }
     }
 }

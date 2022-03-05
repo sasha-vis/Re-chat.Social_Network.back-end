@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Bookmark;
+using WebApi.BLL.DTO.Bookmark;
 using WebApi.DAL.Entities;
 using WebApi.DAL.Interfaces;
 
@@ -20,14 +15,12 @@ namespace WebApi.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
-        public void Create(BookmarkCreateVM model, string userName)
+        public void Create(BookmarkCreateDTO model, string userName)
         {
             var user = _unitOfWork.Users.GetItem(userName);
             var bookmark = _mapper.Map<Bookmark>(model);
             bookmark.UserId = user.Id;
             _unitOfWork.Bookmarks.Create(bookmark);
         }
-
     }
 }

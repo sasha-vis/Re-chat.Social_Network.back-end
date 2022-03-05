@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApi.BLL.ViewModels.Like;
+﻿using WebApi.BLL.DTO.Like;
 
 namespace WebApi.BLL.Interfaces
 {
     public interface ILikeService
     {
-        public void Create(LikeCreateVM model, string userName);
+        public void Create(LikeCreateDTO model, string userName);
     }
 }

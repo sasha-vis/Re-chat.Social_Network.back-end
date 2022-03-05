@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Friend;
+using WebApi.BLL.DTO.Friend;
 using WebApi.DAL.Entities;
 using WebApi.DAL.Entities.Enums;
 using WebApi.DAL.Interfaces;
@@ -21,9 +16,7 @@ namespace WebApi.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
-       
-        public List<FriendVM> FriendsByUser(string userName)
+        public List<FriendDTO> FriendsByUser(string userName)
         {
             var user = _unitOfWork.Users.GetItem(userName);
             List<FriendList> friends = _unitOfWork.Friends.FriendsByUser(userName);
@@ -33,59 +26,56 @@ namespace WebApi.BLL.Services
                 if (friend.FriendId == user.Id)
                 {
                     friend.Friend = friend.User;
-                    friend.FriendId = friend.UserId; 
+                    friend.FriendId = friend.UserId;
                 }
             }
 
-            var result = _mapper.Map<List<FriendVM>>(friends);
+            var result = _mapper.Map<List<FriendDTO>>(friends);
 
             result.OrderBy(x => x.Name).ThenBy(x => x.Surname);
 
             return result;
         }
-
-
-        public List<FriendsGetRequestByUserVM> RequareFriendsByUser(string userName)
+        public List<FriendsGetRequestByUserDTO> RequareFriendsByUser(string userName)
         {
-            IEnumerable<FriendList> friends =  _unitOfWork.Friends.RequareFriendsByUser(userName);
+            IEnumerable<FriendList> friends = _unitOfWork.Friends.RequareFriendsByUser(userName);
 
-            var result = _mapper.Map<List<FriendsGetRequestByUserVM>>(friends);
+            var result = _mapper.Map<List<FriendsGetRequestByUserDTO>>(friends);
 
             result.OrderBy(x => x.Name).ThenBy(x => x.Surname);
 
             return result;
         }
-
-        public List<FriendsToAddGetByUserVM> GetFriendsToAddByUser(string userName)
+        public List<FriendsToAddGetByUserDTO> GetFriendsToAddByUser(string userName)
         {
             var users = _unitOfWork.Users.GetList();
 
-            var mappedUsers = _mapper.Map<List<FriendsToAddGetByUserVM>>(users);
+            var mappedUsers = _mapper.Map<List<FriendsToAddGetByUserDTO>>(users);
 
             var friendsByUser = _unitOfWork.Friends.GetAllFriendsByUser(userName);
 
-            var result = new List<FriendsToAddGetByUserVM>();
+            var result = new List<FriendsToAddGetByUserDTO>();
 
             foreach (var user in mappedUsers)
             {
-                if(user.Email != userName)
+                if (user.Email != userName)
                 {
-                    if(friendsByUser.Count != 0)
+                    if (friendsByUser.Count != 0)
                     {
-                        foreach(var friend in friendsByUser)
+                        foreach (var friend in friendsByUser)
                         {
                             if (friend.FriendId == user.UserId && friend.Status == StatusFriendship.Request)
                             {
                                 user.isFriend = 1;
                                 result.Add(user);
                                 break;
-                            } 
-                            else if (friend.UserId == user.UserId && friend.Status == StatusFriendship.Request) 
+                            }
+                            else if (friend.UserId == user.UserId && friend.Status == StatusFriendship.Request)
                             {
                                 user.isFriend = 2;
                                 result.Add(user);
                                 break;
-                            } 
+                            }
                             else if (friend.FriendId == user.UserId && friend.Status == StatusFriendship.Accepted)
                             {
                                 user.isFriend = 3;
@@ -98,9 +88,10 @@ namespace WebApi.BLL.Services
                             }
                         }
                         if ((!result.Contains(user) && user.isFriend != 3) && user.ExcludeFromSearch == false) { result.Add(user); }
-                    } else
+                    }
+                    else
                     {
-                        if(user.ExcludeFromSearch == false)
+                        if (user.ExcludeFromSearch == false)
                         {
                             user.isFriend = 0;
                             result.Add(user);
@@ -108,15 +99,12 @@ namespace WebApi.BLL.Services
                     }
                 }
             }
-            
+
             result.OrderBy(x => x.Name).ThenBy(x => x.Surname);
 
             return result;
         }
-
-
-
-        public void ResponseToRequareFriendsByUser(ResponseToRequareFriends model, string userName)
+        public void ResponseToRequareFriendsByUser(ResponseToRequareFriendsDTO model, string userName)
         {
             var userDB = _unitOfWork.Users.GetItem(userName);
 
@@ -124,8 +112,7 @@ namespace WebApi.BLL.Services
             response.FriendId = userDB.Id;
             _unitOfWork.Friends.ResponseToRequareFriendsByUser(response);
         }
-
-        public void DeleteFriend(DeleteFriendVM model, string userName)
+        public void DeleteFriend(DeleteFriendDTO model, string userName)
         {
             var userDB = _unitOfWork.Users.GetItem(userName);
 
@@ -133,15 +120,13 @@ namespace WebApi.BLL.Services
             response.UserId = userDB.Id;
             _unitOfWork.Friends.DeleteFriend(response);
         }
-
-        public void Create(CreateFriendVM model, string userName)
+        public void Create(CreateFriendDTO model, string userName)
         {
             var userDB = _unitOfWork.Users.GetItem(userName);
 
             var friend = _mapper.Map<FriendList>(model);
             friend.UserId = userDB.Id;
-             _unitOfWork.Friends.Create(friend);
+            _unitOfWork.Friends.Create(friend);
         }
-
     }
 }

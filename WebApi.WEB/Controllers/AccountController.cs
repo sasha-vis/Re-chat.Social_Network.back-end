@@ -1,26 +1,27 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using WebApi.BLL.Interfaces;
 using WebApi.BLL.Response;
-using WebApi.BLL.ViewModels.User;
+using WebApi.BLL.DTO.User;
+using WebApi.WEB.Filters;
 
 namespace WebApi.WEB.Controllers
 {
     public class AccountController : BaseController
     {
-        private IUserService _userService;
-        public AccountController(IUserService userService)
+        private IAccountService _accountService;
+        public AccountController(IAccountService accountService)
         {
-            _userService = userService;
+            _accountService = accountService;
         }
 
         [HttpPost]
         [Route("Registration")]
-        public IActionResult Regiter(UserRegisterVM model)
+        [ValidateModel]
+        public IActionResult Regiter(UserRegisterDTO model)
         {
-            var result = _userService.Register(model);
+            var result = _accountService.Register(model);
             if (result != null)
             {
                 return Ok(new
@@ -29,14 +30,15 @@ namespace WebApi.WEB.Controllers
                     expiration = result.ValidTo
                 });
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists! or User Create Failed" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists or registration was failed" });
         }
 
         [HttpPost]
         [Route("Login")]
-        public IActionResult Login(UserLoginVM model)
+        [ValidateModel]
+        public IActionResult Login(UserLoginDTO model)
         {
-            var result = _userService.Login(model);
+            var result = _accountService.Login(model);
             if (result != null)
             {
                 return Ok(new
@@ -45,15 +47,35 @@ namespace WebApi.WEB.Controllers
                     expiration = result.ValidTo
                 });
             }
-            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists! or User Create Failed" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Invalid login or password! Try again" });
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPut]
         [Route("ChangePassword")]
-        public IActionResult Put(UserChangePasswordVM user)
+        [ValidateModel]
+        public IActionResult Put(UserChangePasswordDTO user)
         {
-             _userService.ChangePassword(user, User.Identity.Name);
+            _accountService.ChangePassword(user, User.Identity.Name);
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpPut]
+        [Route("ExcludeFromSearch")]
+        public IActionResult ExcludeFromSearch()
+        {
+            _accountService.ExcludeFromSearch(User.Identity.Name);
+            return Ok();
+        }
+
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpPut]
+        [Route("ChangeGeneral")]
+        [ValidateModel]
+        public IActionResult ChangeGeneral(ChangeGeneralInfoUserDTO model)
+        {
+            _accountService.ChangeGeneral(model, User.Identity.Name);
             return Ok();
         }
 

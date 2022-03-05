@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.BLL.DTO.Message;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Message;
+using WebApi.WEB.Filters;
 
 namespace WebApi.WEB.Controllers
 {
@@ -16,12 +16,9 @@ namespace WebApi.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(MessageCreateVM message)
+        [ValidateModel]
+        public IActionResult Post(MessageCreateDTO message)
         {
-            if (!ModelState.IsValid)
-            {
-                return Post(message);
-            }
             _messageService.Create(message, User.Identity.Name);
             return Ok();
         }

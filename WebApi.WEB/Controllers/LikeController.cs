@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApi.BLL.DTO.Like;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Like;
+using WebApi.WEB.Filters;
 
 namespace WebApi.WEB.Controllers
 {
@@ -16,13 +16,10 @@ namespace WebApi.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(LikeCreateVM like)
+        [ValidateModel]
+        public IActionResult Post(LikeCreateDTO like)
         {
-            if (!ModelState.IsValid)
-            {
-                return Post(like);
-            }
-             _likeService.Create(like, User.Identity.Name);
+            _likeService.Create(like, User.Identity.Name);
             return Ok();
         }
     }

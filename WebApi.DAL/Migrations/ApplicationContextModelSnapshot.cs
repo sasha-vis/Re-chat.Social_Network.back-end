@@ -163,9 +163,6 @@ namespace WebApi.DAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("BookmarkedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("PostId")
                         .HasColumnType("int");
 
@@ -220,14 +217,12 @@ namespace WebApi.DAL.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("FriendId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -246,9 +241,6 @@ namespace WebApi.DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("LikedOn")
-                        .HasColumnType("datetime2");
 
                     b.Property<int>("PostId")
                         .HasColumnType("int");
@@ -276,14 +268,13 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("AuthorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("FriendListId")
+                    b.Property<int?>("FriendListId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("MessageDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("MessageText")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -315,7 +306,6 @@ namespace WebApi.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -334,10 +324,9 @@ namespace WebApi.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("BirthdayDate")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("04.03.2004");
+                        .HasDefaultValue("05.03.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -354,7 +343,6 @@ namespace WebApi.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Gender")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
                         .HasDefaultValue("Male");
@@ -388,10 +376,9 @@ namespace WebApi.DAL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("RegistrationDate")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("04.03.2022 17:41");
+                        .HasDefaultValue("05.03.2022 18:19");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -511,14 +498,11 @@ namespace WebApi.DAL.Migrations
                     b.HasOne("WebApi.DAL.Entities.User", "Friend")
                         .WithMany("FriendLists")
                         .HasForeignKey("FriendId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WebApi.DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Friend");
 
@@ -550,9 +534,7 @@ namespace WebApi.DAL.Migrations
 
                     b.HasOne("WebApi.DAL.Entities.FriendList", "FriendList")
                         .WithMany("Messages")
-                        .HasForeignKey("FriendListId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FriendListId");
 
                     b.Navigation("Author");
 
@@ -563,9 +545,7 @@ namespace WebApi.DAL.Migrations
                 {
                     b.HasOne("WebApi.DAL.Entities.User", "User")
                         .WithMany("Posts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

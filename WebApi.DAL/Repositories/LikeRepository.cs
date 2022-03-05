@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebApi.DAL.Entities;
+﻿using WebApi.DAL.Entities;
 using WebApi.DAL.Interfaces;
 
 namespace WebApi.DAL.Repositories
@@ -17,7 +11,6 @@ namespace WebApi.DAL.Repositories
         {
             _db = context;
         }
-
         public List<Like> LikesOfUser(string id)
         {
             var likes = _db.Likes
@@ -25,23 +18,28 @@ namespace WebApi.DAL.Repositories
                 .ToList();
             return likes;
         }
-
         public void Create(Like like)
         {
-            var likeDb = _db.Likes
-                .Where(l => l.UserId == like.UserId && l.PostId == like.PostId)
+            var postDb = _db.Posts
+                .Where(p => p.Id == like.PostId)
                 .FirstOrDefault();
-            if (likeDb == null)
-            {
-                _db.Likes.Add(like);
-                _db.SaveChanges();
-            }
-            else
-            {
-                _db.Likes.Remove(likeDb);
-                _db.SaveChanges();
-            }
 
+            if (postDb != null)
+            {
+                var likeDb = _db.Likes
+                .Where(l => l.UserId == like.UserId && l.PostId == postDb.Id)
+                .FirstOrDefault();
+                if (likeDb == null)
+                {
+                    _db.Likes.Add(like);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    _db.Likes.Remove(likeDb);
+                    _db.SaveChanges();
+                }
+            }
         }
     }
 }

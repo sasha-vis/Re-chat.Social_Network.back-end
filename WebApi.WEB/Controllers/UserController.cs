@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.User;
+using WebApi.BLL.DTO.User;
 
 namespace WebApi.WEB.Controllers
 {
@@ -15,40 +15,17 @@ namespace WebApi.WEB.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<UserGetVM> Get()
+        public IEnumerable<UserGetDTO> Get()
         {
             var result = _userService.GetList(User.Identity.Name);
             return result;
         }
 
         [HttpGet]
-        [Route("Email")]
-        public String GetHeader()
-        {
-            return User.Identity.Name;
-        }
-
-        [HttpGet]
         [Route("Profile")]
-        public UserGetVM GetProfile()
+        public UserGetDTO GetProfile()
         {
             return _userService.GetItem(User.Identity.Name);
-        }
-
-        [HttpPut]
-        [Route("ExcludeFromSearch")]
-        public IActionResult ExcludeFromSearch()
-        {
-           _userService.ExcludeFromSearch(User.Identity.Name);
-            return Ok();
-        }
-
-        [HttpPut]
-        [Route("ChangeGeneral")]
-        public IActionResult ChangeGeneral(ChangeGeneralInfoUserVM model)
-        {
-            _userService.ChangeGeneral(model, User.Identity.Name);
-            return Ok();
         }
     }
 }

@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Post;
+using WebApi.BLL.DTO.Post;
 using WebApi.WEB.Filters;
 
 namespace WebApi.WEB.Controllers
@@ -16,14 +15,15 @@ namespace WebApi.WEB.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PostGetVM> Get()
+        public IEnumerable<PostGetDTO> Get()
         {
             var result = _postService.GetList();
             return result;
         }
 
         [HttpGet("{id}")]
-        public PostGetVM Get(int id)
+        [ValidateModel]
+        public PostGetDTO Get(int id)
         {
             var result = _postService.GetItem(id);
             return result;
@@ -32,7 +32,7 @@ namespace WebApi.WEB.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         [Route("MyPosts")]
-        public IEnumerable<PostGetVM> GetMyPosts()
+        public IEnumerable<PostGetDTO> GetMyPosts()
         {
             return _postService.GetMyPosts(User.Identity.Name);
         }
@@ -40,7 +40,7 @@ namespace WebApi.WEB.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         [Route("Favorites")]
-        public IEnumerable<PostGetVM> GetFavoritesPosts()
+        public IEnumerable<PostGetDTO> GetFavoritesPosts()
         {
             return _postService.GetFavoritesPosts(User.Identity.Name);
         }
@@ -48,7 +48,7 @@ namespace WebApi.WEB.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet]
         [Route("Bookmarks")]
-        public IEnumerable<PostGetVM> GetBookmarksPosts()
+        public IEnumerable<PostGetDTO> GetBookmarksPosts()
         {
             return _postService.GetBookmarksPosts(User.Identity.Name);
         }
@@ -56,7 +56,7 @@ namespace WebApi.WEB.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPost]
         [ValidateModel]
-        public IActionResult Post(PostCreateVM model)
+        public IActionResult Post(PostCreateDTO model)
         {
             _postService.Create(model, User.Identity.Name);
 
@@ -67,7 +67,7 @@ namespace WebApi.WEB.Controllers
         [HttpPost]
         [Route("Create")]
         [ValidateModel]
-        public IEnumerable<PostGetVM> PostFromMain(PostCreateVM model)
+        public IEnumerable<PostGetDTO> PostFromMain(PostCreateDTO model)
         {
             _postService.Create(model, User.Identity.Name);
 
@@ -75,29 +75,21 @@ namespace WebApi.WEB.Controllers
             return result;
         }
 
-
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpPut]
-        public IActionResult Put(PostEditVM model)
+        [ValidateModel]
+        public IActionResult Put(PostEditDTO model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            _postService.Edit(model);
+            _postService.Edit(model, User.Identity.Name);
             return Ok(_postService.GetList());
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpDelete("{id}")]
+        [ValidateModel]
         public IActionResult Delete(int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            _postService.Delete(id);
+            _postService.Delete(id, User.Identity.Name);
             return Ok(_postService.GetMyPosts(User.Identity.Name));
         }
     }

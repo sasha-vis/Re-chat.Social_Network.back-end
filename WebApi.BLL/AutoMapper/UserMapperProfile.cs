@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using WebApi.BLL.ViewModels.User;
+using WebApi.BLL.DTO.User;
 using WebApi.DAL.Entities;
 
 namespace WebApi.BLL.AutoMapper
@@ -8,15 +8,13 @@ namespace WebApi.BLL.AutoMapper
     {
         public UserMapperProfile()
         {
-            CreateMap<User, UserGetVM>();
+            CreateMap<User, UserGetDTO>();
 
-            CreateMap<UserRegisterVM, User>()
+            CreateMap<UserRegisterDTO, User>()
                 .ForMember(c => c.UserName, opt => opt.MapFrom(c => c.Email));
 
-            CreateMap<UserLoginVM, User>()
+            CreateMap<UserLoginDTO, User>()
                 .ForMember(c => c.UserName, opt => opt.MapFrom(c => c.Email));
-
-            //CreateMap<UserEditVM, User>();
         }
     }
 }

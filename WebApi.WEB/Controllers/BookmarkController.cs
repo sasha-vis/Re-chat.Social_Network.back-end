@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Bookmark;
+using WebApi.BLL.DTO.Bookmark;
+using WebApi.WEB.Filters;
 
 namespace WebApi.WEB.Controllers
 {
@@ -16,12 +16,9 @@ namespace WebApi.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(BookmarkCreateVM bookmark)
+        [ValidateModel]
+        public IActionResult Post(BookmarkCreateDTO bookmark)
         {
-            if (!ModelState.IsValid)
-            {
-                return Post(bookmark);
-            }
             _bookmarkService.Create(bookmark, User.Identity.Name);
             return Ok();
         }

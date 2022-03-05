@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Friend;
+using WebApi.BLL.DTO.Friend;
+using WebApi.WEB.Filters;
 
 namespace WebApi.WEB.Controllers
 {
@@ -37,7 +37,8 @@ namespace WebApi.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(CreateFriendVM friend)
+        [ValidateModel]
+        public IActionResult Post(CreateFriendDTO friend)
         {
             _friendsService.Create(friend, User.Identity.Name);
             return Ok();
@@ -45,24 +46,18 @@ namespace WebApi.WEB.Controllers
 
         [HttpPut]
         [Route("ResponseToRequestFriend")]
-        public IActionResult ResponseToRequestFriend(ResponseToRequareFriends model)
+        [ValidateModel]
+        public IActionResult ResponseToRequestFriend(ResponseToRequareFriendsDTO model)
         {
-            if (!ModelState.IsValid)
-            {
-                return ResponseToRequestFriend(model);
-            }
             _friendsService.ResponseToRequareFriendsByUser(model, User.Identity.Name);
             return Ok(_friendsService.RequareFriendsByUser(User.Identity.Name));
         }
 
         [HttpDelete]
-        public IActionResult Delete(DeleteFriendVM model)
+        [ValidateModel]
+        public IActionResult Delete(DeleteFriendDTO friend)
         {
-            if (!ModelState.IsValid)
-            {
-                return Delete(model);
-            }
-            _friendsService.DeleteFriend(model, User.Identity.Name);
+            _friendsService.DeleteFriend(friend, User.Identity.Name);
             return Ok(_friendsService.FriendsByUser(User.Identity.Name));
         }
 

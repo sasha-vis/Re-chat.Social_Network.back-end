@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebApi.BLL.Interfaces;
-using WebApi.BLL.ViewModels.Post;
-using WebApi.DAL.Interfaces;
+using WebApi.BLL.DTO.Post;
 using WebApi.DAL.Entities;
+using WebApi.DAL.Interfaces;
 
 namespace WebApi.BLL.Services
 {
@@ -20,26 +15,23 @@ namespace WebApi.BLL.Services
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-
-        public IEnumerable<PostGetVM> GetList()
+        public IEnumerable<PostGetDTO> GetList()
         {
             var posts = _unitOfWork.Posts.GetList();
 
-            var result = _mapper.Map<IEnumerable<PostGetVM>>(posts);
+            var result = _mapper.Map<IEnumerable<PostGetDTO>>(posts);
 
             return result;
         }
-
-        public PostGetVM GetItem(int id)
+        public PostGetDTO GetItem(int id)
         {
             var posts = _unitOfWork.Posts.GetItem(id);
 
-            var result = _mapper.Map<PostGetVM>(posts);
+            var result = _mapper.Map<PostGetDTO>(posts);
 
             return result;
         }
-
-        public IEnumerable<PostGetVM> GetMyPosts(string userName)
+        public IEnumerable<PostGetDTO> GetMyPosts(string userName)
         {
             var user = _unitOfWork.Users.GetItem(userName);
             var posts = _unitOfWork.Posts.GetList();
@@ -52,12 +44,11 @@ namespace WebApi.BLL.Services
                     myPosts.Add(post);
             }
 
-            var result = _mapper.Map<IEnumerable<PostGetVM>>(myPosts);
+            var result = _mapper.Map<IEnumerable<PostGetDTO>>(myPosts);
 
             return result;
         }
-
-        public IEnumerable<PostGetVM> GetFavoritesPosts(string userName)
+        public IEnumerable<PostGetDTO> GetFavoritesPosts(string userName)
         {
             var user = _unitOfWork.Users.GetItem(userName);
             var posts = _unitOfWork.Posts.GetList();
@@ -73,13 +64,12 @@ namespace WebApi.BLL.Services
                         faivoritePosts.Add(post);
                 }
             }
-            var result = _mapper.Map<IEnumerable<PostGetVM>>(faivoritePosts);
+            var result = _mapper.Map<IEnumerable<PostGetDTO>>(faivoritePosts);
 
             return result;
 
         }
-
-        public IEnumerable<PostGetVM> GetBookmarksPosts(string userName)
+        public IEnumerable<PostGetDTO> GetBookmarksPosts(string userName)
         {
             var user = _unitOfWork.Users.GetItem(userName);
             var posts = _unitOfWork.Posts.GetList();
@@ -95,31 +85,38 @@ namespace WebApi.BLL.Services
                         bookmarksPosts.Add(post);
                 }
             }
-            var result = _mapper.Map<IEnumerable<PostGetVM>>(bookmarksPosts);
+            var result = _mapper.Map<IEnumerable<PostGetDTO>>(bookmarksPosts);
 
             return result;
-
         }
-
-        public void Create(PostCreateVM model, string userName)
+        public void Create(PostCreateDTO model, string userName)
         {
             var post = _mapper.Map<Post>(model);
             _unitOfWork.Posts.Create(post, userName);
         }
-
-        public void Edit(PostEditVM model)
+        public void Edit(PostEditDTO model, string userName)
         {
             var post = _unitOfWork.Posts.GetItem(model.Id);
 
-            post.Title = model.Title;
-            post.Content = model.Content;
+            var user = _unitOfWork.Users.GetItem(userName);
 
-            _unitOfWork.Posts.Edit(post);
+            if (post != null && user.Id == post.UserId)
+            {
+                post.Title = model.Title;
+                post.Content = model.Content;
+
+                _unitOfWork.Posts.Edit(post);
+            }
         }
-
-        public void Delete(int id)
+        public void Delete(int id, string userName)
         {
-            _unitOfWork.Posts.Delete(id);
+            var post = _unitOfWork.Posts.GetItem(id);
+            var user = _unitOfWork.Users.GetItem(userName);
+
+            if (post != null && user.Id == post.UserId)
+            {
+                _unitOfWork.Posts.Delete(post);
+            }
         }
     }
 }
