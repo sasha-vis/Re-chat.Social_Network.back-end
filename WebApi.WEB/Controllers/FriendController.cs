@@ -19,21 +19,24 @@ namespace WebApi.WEB.Controllers
         [Route("FriendsByUser")]
         public IActionResult GetByUser()
         {
-            return Ok(_friendsService.FriendsByUser(User.Identity.Name));
+            var result = _friendsService.FriendsByUser(User.Identity.Name);
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("FriendsRequestByUser")]
         public IActionResult GetRequestFriendsByUser()
         {
-            return Ok(_friendsService.RequareFriendsByUser(User.Identity.Name));
+            var result = _friendsService.RequareFriendsByUser(User.Identity.Name);
+            return Ok(result);
         }
 
         [HttpGet]
         [Route("FriendsToAddByUser")]
         public IActionResult GetFriendsToAddByUser()
         {
-            return Ok(_friendsService.GetFriendsToAddByUser(User.Identity.Name));
+            var result = _friendsService.GetFriendsToAddByUser(User.Identity.Name);
+            return Ok(result);
         }
 
         [HttpPost]
@@ -50,7 +53,7 @@ namespace WebApi.WEB.Controllers
         public IActionResult ResponseToRequestFriend(ResponseToRequareFriendsDTO model)
         {
             _friendsService.ResponseToRequareFriendsByUser(model, User.Identity.Name);
-            return Ok(_friendsService.RequareFriendsByUser(User.Identity.Name));
+            return Ok();
         }
 
         [HttpDelete]
@@ -58,7 +61,7 @@ namespace WebApi.WEB.Controllers
         public IActionResult Delete(DeleteFriendDTO friend)
         {
             _friendsService.DeleteFriend(friend, User.Identity.Name);
-            return Ok(_friendsService.FriendsByUser(User.Identity.Name));
+            return Ok();
         }
 
     }

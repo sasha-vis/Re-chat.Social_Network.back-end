@@ -25,7 +25,8 @@ namespace WebApi.WEB.Controllers
         [Route("Profile")]
         public UserGetDTO GetProfile()
         {
-            return _userService.GetItem(User.Identity.Name);
+            var result = _userService.GetItem(User.Identity.Name);
+            return result;
         }
     }
 }

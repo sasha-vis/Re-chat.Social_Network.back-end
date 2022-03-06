@@ -34,7 +34,8 @@ namespace WebApi.WEB.Controllers
         [Route("MyPosts")]
         public IEnumerable<PostGetDTO> GetMyPosts()
         {
-            return _postService.GetMyPosts(User.Identity.Name);
+            var result = _postService.GetMyPosts(User.Identity.Name);
+            return result;
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -42,7 +43,8 @@ namespace WebApi.WEB.Controllers
         [Route("Favorites")]
         public IEnumerable<PostGetDTO> GetFavoritesPosts()
         {
-            return _postService.GetFavoritesPosts(User.Identity.Name);
+            var result = _postService.GetFavoritesPosts(User.Identity.Name);
+            return result;
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -50,7 +52,8 @@ namespace WebApi.WEB.Controllers
         [Route("Bookmarks")]
         public IEnumerable<PostGetDTO> GetBookmarksPosts()
         {
-            return _postService.GetBookmarksPosts(User.Identity.Name);
+            var result = _postService.GetBookmarksPosts(User.Identity.Name);
+            return result;
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -59,20 +62,7 @@ namespace WebApi.WEB.Controllers
         public IActionResult Post(PostCreateDTO model)
         {
             _postService.Create(model, User.Identity.Name);
-
-            return Ok(_postService.GetMyPosts(User.Identity.Name));
-        }
-
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpPost]
-        [Route("Create")]
-        [ValidateModel]
-        public IEnumerable<PostGetDTO> PostFromMain(PostCreateDTO model)
-        {
-            _postService.Create(model, User.Identity.Name);
-
-            var result = _postService.GetList();
-            return result;
+            return Ok();
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -81,7 +71,7 @@ namespace WebApi.WEB.Controllers
         public IActionResult Put(PostEditDTO model)
         {
             _postService.Edit(model, User.Identity.Name);
-            return Ok(_postService.GetList());
+            return Ok();
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -90,7 +80,7 @@ namespace WebApi.WEB.Controllers
         public IActionResult Delete(int id)
         {
             _postService.Delete(id, User.Identity.Name);
-            return Ok(_postService.GetMyPosts(User.Identity.Name));
+            return Ok();
         }
     }
 }
