@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.DAL.Entities
 {
@@ -9,7 +8,8 @@ namespace WebApi.DAL.Entities
         public string? AuthorId { get; set; }
         public User? Author { get; set; }
         public string? MessageText { get; set; }
-        public int? FriendListId { get; set; }
+        [ForeignKey("FriendListId")]
+        public int FriendListId { get; set; }
         public FriendList? FriendList { get; set; }
         public DateTime MessageDate { get; set; }
     }

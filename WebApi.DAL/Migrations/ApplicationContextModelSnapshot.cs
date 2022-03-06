@@ -268,7 +268,7 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("AuthorId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("FriendListId")
+                    b.Property<int>("FriendListId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("MessageDate")
@@ -326,7 +326,7 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("BirthdayDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("05.03.2004");
+                        .HasDefaultValue("06.03.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -378,7 +378,7 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("RegistrationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("05.03.2022 18:19");
+                        .HasDefaultValue("06.03.2022 17:37");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -534,7 +534,9 @@ namespace WebApi.DAL.Migrations
 
                     b.HasOne("WebApi.DAL.Entities.FriendList", "FriendList")
                         .WithMany("Messages")
-                        .HasForeignKey("FriendListId");
+                        .HasForeignKey("FriendListId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Author");
 

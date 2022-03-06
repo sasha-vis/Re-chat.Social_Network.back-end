@@ -31,8 +31,8 @@ namespace WebApi.DAL.Migrations
                     Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Surname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "Male"),
-                    BirthdayDate = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "05.03.2004"),
-                    RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "05.03.2022 18:19"),
+                    BirthdayDate = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "06.03.2004"),
+                    RegistrationDate = table.Column<string>(type: "nvarchar(max)", nullable: true, defaultValue: "06.03.2022 17:37"),
                     ExcludeFromSearch = table.Column<bool>(type: "bit", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -215,7 +215,7 @@ namespace WebApi.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AuthorId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     MessageText = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FriendListId = table.Column<int>(type: "int", nullable: true),
+                    FriendListId = table.Column<int>(type: "int", nullable: false),
                     MessageDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -230,7 +230,8 @@ namespace WebApi.DAL.Migrations
                         name: "FK_Messages_Friends_FriendListId",
                         column: x => x.FriendListId,
                         principalTable: "Friends",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
