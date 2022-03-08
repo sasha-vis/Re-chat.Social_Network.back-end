@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using WebApi.BLL;
+using WebApi.WEB.ExeptionFilter;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,6 +49,8 @@ builder.Services.AddAuthentication(options =>
 });
 
 var app = builder.Build();
+
+app.UseExceptionHandlerMiddleware();
 
 if (app.Environment.IsDevelopment())
 {

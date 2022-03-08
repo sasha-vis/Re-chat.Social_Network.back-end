@@ -326,7 +326,7 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("BirthdayDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("06.03.2004");
+                        .HasDefaultValue("08.03.2004");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -378,7 +378,7 @@ namespace WebApi.DAL.Migrations
                     b.Property<string>("RegistrationDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("06.03.2022 17:37");
+                        .HasDefaultValue("08.03.2022 12:30");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
