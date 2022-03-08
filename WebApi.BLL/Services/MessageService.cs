@@ -22,7 +22,7 @@ namespace WebApi.BLL.Services
         {
             var userDB = _unitOfWork.Users.GetItem(userName);
 
-            var friendshipsDB = _unitOfWork.Friends.FriendsByUser(userName);
+            var friendshipsDB = _unitOfWork.Friends.FriendsByUser(userDB.Id);
 
             foreach (var friend in friendshipsDB)
             {

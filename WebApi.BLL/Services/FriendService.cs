@@ -19,7 +19,7 @@ namespace WebApi.BLL.Services
         public List<FriendDTO> FriendsByUser(string userName)
         {
             var user = _unitOfWork.Users.GetItem(userName);
-            List<FriendList> friends = _unitOfWork.Friends.FriendsByUser(userName);
+            List<FriendList> friends = _unitOfWork.Friends.FriendsByUser(user.Id);
 
             foreach (var friend in friends)
             {
@@ -38,7 +38,8 @@ namespace WebApi.BLL.Services
         }
         public List<FriendsGetRequestByUserDTO> RequareFriendsByUser(string userName)
         {
-            IEnumerable<FriendList> friends = _unitOfWork.Friends.RequareFriendsByUser(userName);
+            var user = _unitOfWork.Users.GetItem(userName);
+            IEnumerable<FriendList> friends = _unitOfWork.Friends.RequareFriendsByUser(user.Id);
 
             var result = _mapper.Map<List<FriendsGetRequestByUserDTO>>(friends);
 

@@ -32,7 +32,7 @@ namespace WebApi.BLL.Services
             var result = _mapper.Map<UserGetDTO>(user);
             result.CountLikes = _unitOfWork.Likes.LikesOfUser(user.Id).Count;
             result.CountBookmarks = _unitOfWork.Bookmarks.BookmarksOfUser(user.Id).Count;
-            result.CountFriends = _unitOfWork.Friends.FriendsByUser(userName).Count;
+            result.CountFriends = _unitOfWork.Friends.FriendsByUser(user.Id).Count;
 
             return result;
         }

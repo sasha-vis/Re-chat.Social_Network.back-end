@@ -13,20 +13,20 @@ namespace WebApi.DAL.Repositories
         {
             _db = context;
         }
-        public List<FriendList> FriendsByUser(string userName)
+        public List<FriendList> FriendsByUser(string userId)
         {
             var friends = _db.Friends
-                .Where(l => (l.User.Email == userName || l.Friend.Email == userName) && l.Status == StatusFriendship.Accepted)
+                .Where(l => (l.UserId == userId || l.FriendId == userId) && l.Status == StatusFriendship.Accepted)
                 .Include(u => u.User)
                 .Include(l => l.Messages)
                 .Include(u => u.Friend)
                 .ToList();
             return friends;
         }
-        public List<FriendList> RequareFriendsByUser(string userName)
+        public List<FriendList> RequareFriendsByUser(string userId)
         {
             var friends = _db.Friends
-                .Where(l => l.Friend.Email == userName && l.Status == StatusFriendship.Request)
+                .Where(l => l.FriendId == userId && l.Status == StatusFriendship.Request)
                 .Include(u => u.User)
                 .Include(u => u.Friend)
                 .ToList();
@@ -45,7 +45,7 @@ namespace WebApi.DAL.Repositories
         public void ResponseToRequareFriendsByUser(FriendList friend)
         {
             var friendDB = _db.Friends
-                .Where(p => (p.UserId == friend.UserId && p.Status == StatusFriendship.Request))
+                .Where(p => ((p.UserId == friend.UserId && p.FriendId == friend.FriendId) && p.Status == StatusFriendship.Request))
                 .FirstOrDefault();
             if (friendDB != null)
             {
